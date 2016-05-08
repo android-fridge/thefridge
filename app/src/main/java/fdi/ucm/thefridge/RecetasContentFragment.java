@@ -1,4 +1,4 @@
-package fdi.ucm.myapplication5;
+package fdi.ucm.thefridge;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

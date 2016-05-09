@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="352dp"
+        android:layout_height="53dp"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="75dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2dp"
+            android:text=""
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:id="@+id/nombreIngrediente"
+            android:layout_weight="0.89" />
+
+        <ImageButton
+            android:id="@+id/botonBorrar"
+            android:layout_width="69dp"
+            android:layout_height="53dp"
+            android:contentDescription="@string/app_name"
+
+            android:src="@android:drawable/ic_menu_delete"
+            android:layout_margin="5dp"
+            android:adjustViewBounds="false"
+            android:background="#ffffff"
+            android:backgroundTint="#ffffff"
+            android:baselineAlignBottom="false"
+            android:clickable="true" />
+    </LinearLayout>
+
+
+</LinearLayout>

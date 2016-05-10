@@ -1,4 +1,4 @@
-package fdi.ucm.thefridge.fdi.ucm.thefridge.model;
+package fdi.ucm.thefridge.model;
 
 import android.content.Context;
 import android.view.LayoutInflater;

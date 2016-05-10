@@ -1,4 +1,4 @@
-package fdi.ucm.thefridge.fdi.ucm.thefridge.views;
+package fdi.ucm.thefridge.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

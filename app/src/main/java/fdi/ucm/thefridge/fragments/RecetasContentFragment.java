@@ -1,5 +1,7 @@
-package fdi.ucm.thefridge.fdi.ucm.thefridge.views;
+package fdi.ucm.thefridge.fragments;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import fdi.ucm.thefridge.R;
+import fdi.ucm.thefridge.activities.DetailActivity;
 
 /**
  * Created by Carlos Casado González on 02/05/2016.
@@ -29,7 +32,17 @@ public class RecetasContentFragment extends Fragment {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.item_recetas, parent, false));
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    context.startActivity(intent);
+                }
+            });
         }
+
+
     }
     /**
      * Adapter to display recycler view.

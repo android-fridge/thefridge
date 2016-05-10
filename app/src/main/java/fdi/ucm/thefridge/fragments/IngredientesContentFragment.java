@@ -1,4 +1,4 @@
-package fdi.ucm.thefridge.fdi.ucm.thefridge.views;
+package fdi.ucm.thefridge.fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,8 +13,8 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import fdi.ucm.thefridge.fdi.ucm.thefridge.model.Ingrediente;
-import fdi.ucm.thefridge.fdi.ucm.thefridge.model.ListViewIngredientesAdapter;
+import fdi.ucm.thefridge.model.Ingrediente;
+import fdi.ucm.thefridge.model.ListViewIngredientesAdapter;
 import fdi.ucm.thefridge.R;
 
 /**

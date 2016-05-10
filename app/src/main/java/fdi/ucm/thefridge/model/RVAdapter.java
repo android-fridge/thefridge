@@ -1,4 +1,4 @@
-package fdi.ucm.thefridge.fdi.ucm.thefridge.model;
+package fdi.ucm.thefridge.model;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;

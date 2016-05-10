@@ -1,8 +1,6 @@
-package fdi.ucm.thefridge.fdi.ucm.thefridge;
+package fdi.ucm.thefridge.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,7 +8,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -18,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fdi.ucm.thefridge.R;
-import fdi.ucm.thefridge.fdi.ucm.thefridge.views.IngredientesContentFragment;
-import fdi.ucm.thefridge.fdi.ucm.thefridge.views.OneclicContentFragment;
-import fdi.ucm.thefridge.fdi.ucm.thefridge.views.RecetasContentFragment;
+import fdi.ucm.thefridge.fragments.IngredientesContentFragment;
+import fdi.ucm.thefridge.fragments.OneclicContentFragment;
+import fdi.ucm.thefridge.fragments.RecetasContentFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,15 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabs= (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     static class MyAdapter extends FragmentPagerAdapter {

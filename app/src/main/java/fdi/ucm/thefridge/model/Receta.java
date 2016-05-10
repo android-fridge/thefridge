@@ -1,4 +1,4 @@
-package fdi.ucm.thefridge.fdi.ucm.thefridge.model;
+package fdi.ucm.thefridge.model;
 
 /**
  * Created by mizlap on 08/05/2016.

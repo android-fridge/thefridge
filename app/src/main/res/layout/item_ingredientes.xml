@@ -13,8 +13,8 @@
             android:id="@+id/botonAnadir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:src="@android:drawable/ic_input_add"
+            android:layout_gravity="bottom|end"
+            android:src="@drawable/ic_add_white_24dp"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="16dp" />
 

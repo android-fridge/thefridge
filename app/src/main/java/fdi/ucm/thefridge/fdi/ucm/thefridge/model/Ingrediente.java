@@ -1,4 +1,4 @@
-package fdi.ucm.thefridge;
+package fdi.ucm.thefridge.fdi.ucm.thefridge.model;
 
 /**
  * Created by Michael Tome Rodriguez on 02/05/2016.

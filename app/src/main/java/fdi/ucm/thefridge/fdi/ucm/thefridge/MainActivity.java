@@ -1,4 +1,4 @@
-package fdi.ucm.thefridge;
+package fdi.ucm.thefridge.fdi.ucm.thefridge;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +16,11 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import fdi.ucm.thefridge.R;
+import fdi.ucm.thefridge.fdi.ucm.thefridge.views.IngredientesContentFragment;
+import fdi.ucm.thefridge.fdi.ucm.thefridge.views.OneclicContentFragment;
+import fdi.ucm.thefridge.fdi.ucm.thefridge.views.RecetasContentFragment;
 
 public class MainActivity extends AppCompatActivity {
 

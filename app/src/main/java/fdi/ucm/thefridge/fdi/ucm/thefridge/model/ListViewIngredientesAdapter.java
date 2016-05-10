@@ -1,4 +1,4 @@
-package fdi.ucm.thefridge;
+package fdi.ucm.thefridge.fdi.ucm.thefridge.model;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import fdi.ucm.thefridge.R;
 
 /**
  * Created by Michael Tome Rodriguez on 03/05/2016.

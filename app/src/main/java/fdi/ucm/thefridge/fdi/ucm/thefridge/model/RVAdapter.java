@@ -1,4 +1,4 @@
-package fdi.ucm.thefridge;
+package fdi.ucm.thefridge.fdi.ucm.thefridge.model;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import fdi.ucm.thefridge.R;
 
 /**
  * Created by mizlap on 08/05/2016.

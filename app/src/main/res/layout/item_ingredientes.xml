@@ -1,35 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/botonAnadir"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:src="@drawable/ic_add_white_24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="16dp" />
-
-        <ListView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/lista"/>
-
-
-    </RelativeLayout>
-
-    <WebView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/webview"
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_ingrediente"
+        android:layout_gravity="center"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
+        android:layout_height="100dp"
+        android:layout_margin="5dp"
+        card_view:cardCornerRadius="2dp"
+        card_view:contentPadding="10dp">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/imagen_ingrediente"
+                android:background="@drawable/paris"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="10dp"
+                />
+
+            <TextView
+                android:id="@+id/nombre_ingrediente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="prueba de ingrediente"
+                android:layout_centerVertical="true"
+                android:textSize="20sp"
+                android:layout_toEndOf="@+id/imagen_ingrediente" />
+
+            <ImageButton
+                android:id="@+id/botonBorrar"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@android:drawable/ic_menu_delete"
+                android:background="#ffffff"
+                android:backgroundTint="#ffffff"
+                android:clickable="true"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+
 </LinearLayout>

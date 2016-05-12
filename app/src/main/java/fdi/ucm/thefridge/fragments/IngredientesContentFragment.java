@@ -3,19 +3,16 @@ package fdi.ucm.thefridge.fragments;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import fdi.ucm.thefridge.R;
 import fdi.ucm.thefridge.model.Ingrediente;
 import fdi.ucm.thefridge.model.ListViewIngredientesAdapter;
-import fdi.ucm.thefridge.R;
 
 /**
  * Created by Carlos Casado González on 02/05/2016.
@@ -30,35 +27,39 @@ public class IngredientesContentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.item_ingredientes, container, false);
+
+        rootView = inflater.inflate(R.layout.list_ingrediente, container, false);
 
         listIngredientes = GetlistIngredientes();
-        lv = (ListView)rootView.findViewById(R.id.lista);
+
+        lv = (ListView)rootView.findViewById(R.id.list_ingredientes);
         adapter = new ListViewIngredientesAdapter(getActivity(), listIngredientes);
         lv.setAdapter(adapter);
-        FloatingActionButton addButton = (FloatingActionButton) rootView.findViewById(R.id.botonAnadir);
-        final WebView visorHTML = (WebView)rootView.findViewById(R.id.webview);
-
-        //colocar aqui las reacciones de la lista
+        FloatingActionButton addButton = (FloatingActionButton) rootView.findViewById(R.id.boton_anadir);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //do something
-                visorHTML.loadUrl("file:///android_asset/anadir.html");
-                WebSettings webSettings = visorHTML.getSettings();
-                webSettings.setJavaScriptEnabled(true);
-                Log.v("tag", "Añadido");
+
             }
         });
-
-
-
         return rootView;
     }
 
+    /**
+     * Metodo para escribir en el archivo local
+     */
+    public void escribirArchivoEnLocal(Ingrediente ing){
+
+    }
+
+    /**
+     * Metodo para añadir datos a la lista
+     * @return arrayList con los datos del fichero
+     */
     private ArrayList<Ingrediente> GetlistIngredientes(){
-        ArrayList<Ingrediente> listaIngrediente = new ArrayList<Ingrediente>();
+        ArrayList<Ingrediente> listaIngrediente = new ArrayList<>();
+
 
         Ingrediente ingrediente = new Ingrediente();
         ingrediente.setNombre("dsadsa");
@@ -106,6 +107,4 @@ public class IngredientesContentFragment extends Fragment {
 
         return listaIngrediente;
     }
-
-
 }

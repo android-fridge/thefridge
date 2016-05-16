@@ -50,27 +50,6 @@ public class ListViewIngredientesAdapter extends ArrayAdapter<Ingrediente> {
                 String nombre = ingredientes.get(position).getNombre();
                 int img = ingredientes.get(position).getImg();
                 ingredientes.remove(position); //or some other task
-                /** try
-                 {
-                 BufferedReader fin =
-                 new BufferedReader(
-                 new InputStreamReader(
-                 context.openFileInput("intern_fridge.txt")));
-
-                 String line = null;
-                 while ((line = fin.readLine()) != null){
-                 if(!line.equals(linea)){
-                 String[] div = line.split(",");
-                 Ingrediente in = new Ingrediente(div[0], Integer.parseInt(div[1]));
-                 ingredientes.add(in);
-                 }
-                 }
-                 fin.close();
-                 }
-                 catch (Exception ex)
-                 {
-                 Log.e("Ficheros", "Error al leer fichero desde memoria interna");
-                 }*/
                 notifyDataSetChanged();
             }
 

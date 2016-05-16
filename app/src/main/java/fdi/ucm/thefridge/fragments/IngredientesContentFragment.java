@@ -39,9 +39,7 @@ public class IngredientesContentFragment extends Fragment{
                              Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.list_ingrediente, container, false);
-
         listIngredientes = GetlistIngredientes();
-
         lv = (ListView)rootView.findViewById(R.id.list_ingredientes);
         adapter = new ListViewIngredientesAdapter(getActivity(), listIngredientes);
         lv.setAdapter(adapter);
@@ -78,6 +76,7 @@ public class IngredientesContentFragment extends Fragment{
     }
 
     public void onPause(){
+        super.onPause();
         OutputStreamWriter escritor=null;
         try
         {
@@ -103,8 +102,8 @@ public class IngredientesContentFragment extends Fragment{
         }
     }
 
-    public void onDestroy(){
-
+   public void onStop(){
+       super.onStop();
             OutputStreamWriter escritor=null;
             try
             {

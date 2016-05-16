@@ -8,7 +8,7 @@
     <FrameLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="560dp">
 
         <ListView
             android:id="@+id/list_ingredientes"
@@ -18,13 +18,17 @@
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/boton_anadir"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
+            android:layout_height="match_parent"
+            android:layout_gravity="right|bottom"
             android:src="@drawable/ic_add_white_24dp"
-            app:borderWidth="5dp"
-            app:elevation="20dp"
             android:layout_marginBottom="@dimen/fab_margin"
-            android:layout_marginEnd="@dimen/fab_margin"/>
+            android:layout_marginRight="@dimen/fab_margin"/>
 
     </FrameLayout>
+
+    <WebView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

@@ -28,7 +28,11 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        Bundle extras = getIntent().getExtras();
+        int position = 0;
+        if(extras != null) {
+            position = extras.getInt("viewpager_position");
+        }
         ViewPager viewPager=(ViewPager) findViewById(R.id.viewpager);
         MyAdapter adapter = new MyAdapter(getSupportFragmentManager());
         adapter.addFragment(new OneclicContentFragment(), "OneClic");
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabs= (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+        viewPager.setCurrentItem(position);
     }
 
     static class MyAdapter extends FragmentPagerAdapter {

@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //Recibe desde otra actividad informacion necesitada
         Bundle extras = getIntent().getExtras();
         int position = 0;
         if(extras != null) {
@@ -37,11 +38,12 @@ public class MainActivity extends AppCompatActivity {
         MyAdapter adapter = new MyAdapter(getSupportFragmentManager());
         adapter.addFragment(new OneclicContentFragment(), "OneClic");
         adapter.addFragment(new RecetasContentFragment(), "Receta");
-        adapter.addFragment(new IngredientesContentFragment(), "Ingredientes");
+        adapter.addFragment(new IngredientesContentFragment(), "Nevera");
         viewPager.setAdapter(adapter);
 
         TabLayout tabs= (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+        //Se coloca el viewPager en el valor pasado
         viewPager.setCurrentItem(position);
     }
 

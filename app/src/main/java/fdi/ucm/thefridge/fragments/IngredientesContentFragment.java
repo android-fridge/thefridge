@@ -19,7 +19,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import fdi.ucm.thefridge.R;
-import fdi.ucm.thefridge.activities.formAnadirIngredientes;
+import fdi.ucm.thefridge.activities.FormAnadirIngredientes;
 import fdi.ucm.thefridge.model.Ingrediente;
 import fdi.ucm.thefridge.model.ListViewIngredientesAdapter;
 
@@ -53,7 +53,7 @@ public class IngredientesContentFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 Context context = v.getContext();
-                Intent intent = new Intent(context, formAnadirIngredientes.class);
+                Intent intent = new Intent(context, FormAnadirIngredientes.class);
                 context.startActivity(intent);
                 /** form.loadUrl("https://amatellanes.wordpress.com/");
                 //Forzar a la aplicacion para que habra enlaces internos
@@ -75,7 +75,11 @@ public class IngredientesContentFragment extends Fragment{
         return rootView;
     }
 
+    /**
+     * Llamado al momento de pasar a otra actividad y estar en segundo plano
+     */
     public void onPause(){
+        //esta linea es necesaria
         super.onPause();
         OutputStreamWriter escritor=null;
         try
@@ -102,6 +106,9 @@ public class IngredientesContentFragment extends Fragment{
         }
     }
 
+    /**
+     * Llamado al momento de cerrar la aplicacion
+     */
    public void onStop(){
        super.onStop();
             OutputStreamWriter escritor=null;
@@ -140,7 +147,7 @@ public class IngredientesContentFragment extends Fragment{
             InputStreamReader arch = new InputStreamReader(getActivity().openFileInput("intern_fridge.txt"));
             BufferedReader fin = new BufferedReader(arch);
 
-            String line = null;
+            String line;
             while ((line = fin.readLine()) != null){
 
                 String[] div = line.split(",");

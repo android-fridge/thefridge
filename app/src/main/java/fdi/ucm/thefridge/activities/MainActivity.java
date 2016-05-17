@@ -1,5 +1,8 @@
 package fdi.ucm.thefridge.activities;
 
+import android.content.Context;
+import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -8,19 +11,21 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import fdi.ucm.thefridge.BD.DBHelper;
 import fdi.ucm.thefridge.R;
 import fdi.ucm.thefridge.fragments.IngredientesContentFragment;
 import fdi.ucm.thefridge.fragments.OneclicContentFragment;
 import fdi.ucm.thefridge.fragments.RecetasContentFragment;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +43,14 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabs= (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+
+
+        Toast.makeText(getBaseContext(), "Base de datos preparada", Toast.LENGTH_LONG).show();
+
+
+
+        //DBHelper.Usuario usuario=dbHelper.get("usr2");
+
     }
 
     static class MyAdapter extends FragmentPagerAdapter {
@@ -84,7 +97,18 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings_registrar) {
+            Context context = this.getApplicationContext();
+            Intent intent = new Intent(this, RegisterActivity.class);
+            startActivity(intent);
+            //context.startActivity(intent);
+            return true;
+        }
+        if (id == R.id.action_settings_login) {
+            Context context = this.getApplicationContext();
+            Intent intent = new Intent(this, RegisterActivity.class);
+            startActivity(intent);
+            //context.startActivity(intent);
             return true;
         }
 

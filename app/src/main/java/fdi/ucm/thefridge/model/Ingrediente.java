@@ -1,10 +1,13 @@
 package fdi.ucm.thefridge.model;
 
+
+import java.util.Comparator;
+
 /**
  * Created by Michael Tome Rodriguez on 02/05/2016.
  * Clase de los ingredientes
  */
-public class Ingrediente {
+public class Ingrediente implements Comparator<Ingrediente> {
     private String nombre;
     private int img; //Las referencias a las imagenes se devuelven como enteros
 
@@ -30,4 +33,11 @@ public class Ingrediente {
     public void setImg(int img){
         this.img = img;
     }
+
+    @Override
+    public int compare(Ingrediente lhs, Ingrediente rhs) {
+        return lhs.getNombre().compareTo(rhs.getNombre());
+    }
+
+
 }

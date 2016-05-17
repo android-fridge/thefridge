@@ -1,44 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="352dp"
-        android:layout_height="53dp"
-        android:weightSum="1">
+    <FrameLayout
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="560dp">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="75dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="0dp" />
+        <ListView
+            android:id="@+id/list_ingredientes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-        <TextView
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/boton_anadir"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="2dp"
-            android:text=""
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:id="@+id/nombreIngrediente"
-            android:layout_weight="0.89" />
+            android:layout_gravity="right|bottom"
+            android:src="@drawable/ic_add_white_24dp"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"/>
 
-        <ImageButton
-            android:id="@+id/botonBorrar"
-            android:layout_width="69dp"
-            android:layout_height="53dp"
-            android:contentDescription="@string/app_name"
+    </FrameLayout>
 
-            android:src="@android:drawable/ic_menu_delete"
-            android:layout_margin="5dp"
-            android:adjustViewBounds="false"
-            android:background="#ffffff"
-            android:backgroundTint="#ffffff"
-            android:baselineAlignBottom="false"
-            android:clickable="true" />
-    </LinearLayout>
-
-
+    <WebView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

@@ -26,6 +26,7 @@ import fdi.ucm.thefridge.fragments.OneclicContentFragment;
 import fdi.ucm.thefridge.fragments.RecetasContentFragment;
 
 public class MainActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,12 +34,17 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        //Recibe desde otra actividad informacion necesitada
+        Bundle extras = getIntent().getExtras();
+        int position = 0;
+        if(extras != null) {
+            position = extras.getInt("viewpager_position");
+        }
         ViewPager viewPager=(ViewPager) findViewById(R.id.viewpager);
         MyAdapter adapter = new MyAdapter(getSupportFragmentManager());
         adapter.addFragment(new OneclicContentFragment(), "OneClic");
         adapter.addFragment(new RecetasContentFragment(), "Receta");
-        adapter.addFragment(new IngredientesContentFragment(), "Ingredientes");
+        adapter.addFragment(new IngredientesContentFragment(), "Nevera");
         viewPager.setAdapter(adapter);
 
         TabLayout tabs= (TabLayout) findViewById(R.id.tabs);
@@ -51,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
         //DBHelper.Usuario usuario=dbHelper.get("usr2");
 
+        //Se coloca el viewPager en el valor pasado
+        viewPager.setCurrentItem(position);
     }
 
     static class MyAdapter extends FragmentPagerAdapter {

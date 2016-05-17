@@ -34,11 +34,12 @@ public class ListViewIngredientesAdapter extends ArrayAdapter<Ingrediente> {
         // TODO Auto-generated method stu
         if (convertView == null) {
             mInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-            convertView = mInflater.inflate(R.layout.list_ingrediente, null);
+            convertView = mInflater.inflate(R.layout.item_ingredientes, null);
         }
         //inicializaciones
-        TextView nombre = (TextView) convertView.findViewById(R.id.nombreIngrediente);
-        ImageView img = (ImageView) convertView.findViewById(R.id.imageView);
+        //CardView card = (CardView)  convertView.findViewById(R.id.card_ingrediente);
+        TextView nombre = (TextView) convertView.findViewById(R.id.nombre_ingrediente);
+        ImageView img = (ImageView) convertView.findViewById(R.id.imagen_ingrediente);
         ImageButton delButton = (ImageButton) convertView.findViewById(R.id.botonBorrar);
 
         //Aciones de los botones de borrado
@@ -46,9 +47,12 @@ public class ListViewIngredientesAdapter extends ArrayAdapter<Ingrediente> {
             @Override
             public void onClick(View v) {
                 //do something
+                String nombre = ingredientes.get(position).getNombre();
+                int img = ingredientes.get(position).getImg();
                 ingredientes.remove(position); //or some other task
                 notifyDataSetChanged();
             }
+
         });
 
         //dar texto e imagen

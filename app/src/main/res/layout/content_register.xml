@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="30dp"
+    tools:showIn="@layout/activity_register"
+    app:elevation="0dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Introduce tus datos de registro"
+        android:id="@+id/textViewMsg"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextRegId"
+        android:layout_marginTop="35dp"
+        android:layout_gravity="right|top"
+        android:layout_below="@+id/textViewMsg"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/textViewMsg"
+        android:hint="Usuario"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageNotChecked0"
+        android:background="@drawable/not_checked"
+        android:visibility="visible"
+        android:adjustViewBounds="false"
+        android:translationZ="2dp"
+        android:layout_alignTop="@+id/editTextRegId"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageChecked0"
+        android:background="@drawable/checked"
+        android:visibility="invisible"
+        android:translationZ="2dp"
+        android:layout_alignTop="@+id/editTextRegId"
+        android:layout_alignEnd="@+id/editTextRegId" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editTextRegPass1"
+        android:layout_marginTop="35dp"
+        android:layout_gravity="right|center|top"
+        android:layout_below="@+id/editTextRegId"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/editTextRegId"
+        android:hint="Contraseña"
+        android:translationZ="1dp" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageNotChecked"
+        android:background="@drawable/not_checked"
+        android:visibility="visible"
+        android:adjustViewBounds="false"
+        android:translationZ="2dp"
+        android:layout_alignTop="@+id/editTextRegPass1"
+        android:layout_alignStart="@+id/imageChecked" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageChecked"
+        android:background="@drawable/checked"
+        android:visibility="invisible"
+        android:translationZ="2dp"
+        android:layout_alignTop="@+id/editTextRegPass1"
+        android:layout_alignStart="@+id/imageNotChecked2" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editTextRegPass2"
+        android:layout_gravity="right|top"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="35dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/editTextRegPass1"
+        android:hint="Confirmar contraseña"
+        android:translationZ="1dp" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageNotChecked2"
+        android:background="@drawable/not_checked"
+        android:visibility="visible"
+        android:translationZ="2dp"
+        android:layout_alignTop="@+id/editTextRegPass2"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageChecked2"
+        android:background="@drawable/checked"
+        android:visibility="invisible"
+        android:translationZ="2dp"
+        android:layout_alignTop="@+id/editTextRegPass2"
+        android:layout_alignEnd="@+id/editTextRegPass2" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Registrar"
+        android:id="@+id/button_register"
+        android:layout_marginTop="60dp"
+        android:layout_below="@+id/editTextRegPass2"
+        android:layout_alignParentEnd="true"
+        android:background="@color/colorAccent"
+        android:textColor="@color/cardview_light_background" />
+
+</RelativeLayout>

@@ -114,9 +114,12 @@ public class MainActivity extends AppCompatActivity {
         }
         if (id == R.id.action_settings_login) {
             Context context = this.getApplicationContext();
-            Intent intent = new Intent(this, RegisterActivity.class);
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            return true;
+        }
             //context.startActivity(intent);
+        if (id == R.id.action_settings) {
             return true;
         }
 

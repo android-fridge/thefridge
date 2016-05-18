@@ -210,6 +210,7 @@ public class FormAnadirIngredientes extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
+
     /**
      * Busuqeda para encontrar el string y obtener el ingrediente, una busqueda binaria ordinaria
      * @param bd base de datos

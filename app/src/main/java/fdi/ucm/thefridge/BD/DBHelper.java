@@ -11,6 +11,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.SyncStateContract;
 import android.util.Log;
 
+import fdi.ucm.thefridge.model.Usuario;
+
 /**
  * Created by Carlos Casado González on 15/05/2016.
  */
@@ -23,33 +25,6 @@ public class DBHelper {
     private SQLiteDatabase db;
     private final DBOpenHelper dbOpenHelper;
 
-    public static final class Usuario{
-        private String id, password;
-
-        public Usuario(String id, String password){
-            this.id=id;
-            this.password=password;
-        }
-        public Usuario(){
-
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-    }
 
     public DBHelper (Context context){
         dbOpenHelper=new DBOpenHelper(context, "WR_DATA", 1);
@@ -71,8 +46,8 @@ public class DBHelper {
 
     public void insert (Usuario usr)throws SQLiteConstraintException {
         ContentValues values=new ContentValues();
-        values.put("id", usr.id);
-        values.put("password", usr.password);
+        values.put("id", usr.getId());
+        values.put("password", usr.getPassword());
         /*Lanza excepcion si hay error en insercion*/
         db.insertOrThrow(DBHelper.DB_TABLE,null,values);
         //db.insert(DBHelper.DB_TABLE,null,values);
@@ -81,9 +56,9 @@ public class DBHelper {
 
     public void update (Usuario usr){
         ContentValues values=new ContentValues();
-        values.put("id", usr.id);
-        values.put("password", usr.password);
-        db.update(DBHelper.DB_TABLE,values,"id="+usr.id,null);
+        values.put("id", usr.getId());
+        values.put("password", usr.getPassword());
+        db.update(DBHelper.DB_TABLE,values,"id="+usr.getId(),null);
     }
 
     public void delete(String id){
@@ -98,9 +73,10 @@ public class DBHelper {
             if(c.getCount()>0){
                 c.moveToFirst();
                 usr=new Usuario();
-                usr.id=c.getString(0);
-                usr.password=c.getString(1);
-            }
+                usr.setId(c.getString(0));
+                usr.setPassword(c.getString(1));
+            }else
+                return null;
         }catch(SQLException e){
             e.printStackTrace();
         }finally{

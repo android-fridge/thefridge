@@ -24,6 +24,7 @@ import fdi.ucm.thefridge.R;
 import fdi.ucm.thefridge.fragments.IngredientesContentFragment;
 import fdi.ucm.thefridge.fragments.OneclicContentFragment;
 import fdi.ucm.thefridge.fragments.RecetasContentFragment;
+import fdi.ucm.thefridge.model.SesionUsuario;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         if(extras != null) {
             position = extras.getInt("viewpager_position");
         }
+
         ViewPager viewPager=(ViewPager) findViewById(R.id.viewpager);
         MyAdapter adapter = new MyAdapter(getSupportFragmentManager());
         adapter.addFragment(new OneclicContentFragment(), "OneClic");
@@ -50,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabs= (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
-
         Toast.makeText(getBaseContext(), "Base de datos preparada", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Bienvenido, "+SesionUsuario.getId(), Toast.LENGTH_LONG).show();
 
 
 
@@ -104,19 +106,11 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings_registrar) {
-            Context context = this.getApplicationContext();
-            Intent intent = new Intent(this, RegisterActivity.class);
-            startActivity(intent);
-            //context.startActivity(intent);
-            return true;
-        }
-        if (id == R.id.action_settings_login) {
+        if (id == R.id.action_settings_logout) {
             Context context = this.getApplicationContext();
             Intent intent = new Intent(this, LoginActivity.class);
+            finish();
             startActivity(intent);
-            return true;
         }
             //context.startActivity(intent);
         if (id == R.id.action_settings) {

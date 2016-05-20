@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 
 import fdi.ucm.thefridge.BD.DBHelper;
 import fdi.ucm.thefridge.R;
+import fdi.ucm.thefridge.model.Usuario;
 
 /**
  * Created by Carlos Casado González on 11/05/2016.
@@ -162,7 +163,7 @@ public class RegisterActivity extends AppCompatActivity {
                 showWaitDialog("Registrando...");
 
                 try{
-                    DBHelper.Usuario usuario = new DBHelper.Usuario(username, pass);
+                    Usuario usuario = new Usuario(username, pass);
                     dbHelper.insert(usuario);
                     closeWaitDialog();
                     showDialogMessage("¡Registro completado!", "Bienvenido, "+username, true);

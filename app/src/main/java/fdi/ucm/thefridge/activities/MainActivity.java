@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
             position = extras.getInt("viewpager_position");
         }
 
+
         ViewPager viewPager=(ViewPager) findViewById(R.id.viewpager);
         MyAdapter adapter = new MyAdapter(getSupportFragmentManager());
         adapter.addFragment(new OneclicContentFragment(), "OneClic");

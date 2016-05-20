@@ -2,7 +2,6 @@ package fdi.ucm.thefridge.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,7 +10,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -19,7 +17,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import fdi.ucm.thefridge.BD.DBHelper;
 import fdi.ucm.thefridge.R;
 import fdi.ucm.thefridge.fragments.IngredientesContentFragment;
 import fdi.ucm.thefridge.fragments.OneclicContentFragment;
@@ -34,12 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //Recibe desde otra actividad informacion necesitada
-        Bundle extras = getIntent().getExtras();
-        int position = 0;
-        if(extras != null) {
-            position = extras.getInt("viewpager_position");
-        }
+
         ViewPager viewPager=(ViewPager) findViewById(R.id.viewpager);
         MyAdapter adapter = new MyAdapter(getSupportFragmentManager());
         adapter.addFragment(new OneclicContentFragment(), "OneClic");
@@ -56,9 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         //DBHelper.Usuario usuario=dbHelper.get("usr2");
-
-        //Se coloca el viewPager en el valor pasado
-        viewPager.setCurrentItem(position);
     }
 
     static class MyAdapter extends FragmentPagerAdapter {

@@ -1,5 +1,6 @@
 package fdi.ucm.thefridge.activities;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -42,12 +45,22 @@ public class FormAnadirIngredientes extends AppCompatActivity{
     private ListViewIngredientesAdapter adapter;
     private AlertDialog alert;
     private ArrayList<Ingrediente> datos;
+    private ArrayList<Ingrediente> neveraInterna;
     private ArrayList<String> nombresDeIngredientes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_anadir_ingredientes);
+
+        neveraInterna = new ArrayList<>();
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            neveraInterna =  extras.getParcelableArrayList("nevera");
+            if(neveraInterna == null)
+                neveraInterna = new ArrayList<>();
+        }
+
         //Ingredientes buscados
         buscados = new ArrayList<>();
         //Se crea el adaptador para la lista
@@ -61,7 +74,6 @@ public class FormAnadirIngredientes extends AppCompatActivity{
         //Campo de texto
         mIngredienteView = (TextView) findViewById(R.id.texto_buscar_ingrediente);
 
-
         //Autocompletado
         ingredienteBuscado = (AutoCompleteTextView) findViewById(R.id.ingrediente_buscado);
         ///Obtener datos del archivo de ingredientes globales
@@ -72,6 +84,52 @@ public class FormAnadirIngredientes extends AppCompatActivity{
         ArrayAdapter<String> adapterAutoComp = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,datosAuto);
         //Le damos el adapter al autocompletado
         ingredienteBuscado.setAdapter(adapterAutoComp);
+
+        ingredienteBuscado.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId,
+                                          KeyEvent event) {
+                if (event != null&& (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(ingredienteBuscado.getWindowToken(), 0);
+                    //Obtiene el texto introducido
+                    String ingrediente = ingredienteBuscado.getText().toString();
+                    if(!ingrediente.isEmpty()){
+                        ingredienteBuscado.setText("");
+                        //busca el ingrediente con el texto
+                        Ingrediente encontrado = busquedaBinaria(datos, ingrediente);
+                        if(encontrado != null) {
+                            Ingrediente repetido = busquedaBinaria(neveraInterna, encontrado.getNombre());
+                            if(repetido == null) {
+                                Ingrediente repetidoTemp = busquedaBinaria(buscados, encontrado.getNombre());
+                                if(repetidoTemp == null) {
+                                    buscados.add(encontrado);
+                                    lv.deferNotifyDataSetChanged();
+                                }
+                                else{
+                                    Toast.makeText(v.getContext(), "¡Ya está en la lista!",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            }
+                            else{
+                                Toast.makeText(v.getContext(), "¡Ya está en la nevera!",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        else {
+                            Toast.makeText(v.getContext(), "Ingrediente no encontrado",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    
+                    // Must return true here to consume event
+                    return true;
+
+                }
+                return false;
+            }
+        });
 
         //Caja de contenido
         all = (LinearLayout) findViewById(R.id.form_ingediente_todo);
@@ -91,12 +149,17 @@ public class FormAnadirIngredientes extends AppCompatActivity{
         aceptarCambios.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Reordenamos el array de la nevera con todos los datos agregados
+                for(int i = 0; i < buscados.size(); i++){
+                    neveraInterna.add(buscados.get(i));
+                }
+                Collections.sort(neveraInterna, new Ingrediente());
                 OutputStreamWriter escritor=null;
                 try
                 {
-                    escritor=new OutputStreamWriter(openFileOutput("intern_fridge.txt", Context.MODE_APPEND));
+                    escritor=new OutputStreamWriter(openFileOutput("intern_fridge.txt", Context.MODE_PRIVATE));
                     for(int i = 0; i < buscados.size(); i++) {
-                        escritor.write(buscados.get(i).getNombre() + "," + buscados.get(i).getImg() + "\n");
+                        escritor.write(neveraInterna.get(i).getNombre() + "," + neveraInterna.get(i).getRareza() + "," + neveraInterna.get(i).getImg() + "\n");
                     }
                     escritor.flush();
                     escritor.close();
@@ -114,11 +177,11 @@ public class FormAnadirIngredientes extends AppCompatActivity{
                         e.printStackTrace();
                     }
                 }
-                //Cambio de actividad, se le pasa a la otra actividad el fragment donde se encontraba
+                //Finaliza la actividad y se le pasa a la actividad padre el array de la nevera
                 Context context = v.getContext();
-                Intent i = new Intent(context, MainActivity.class);
-                i.putExtra("viewpager_position", 2);
-                context.startActivity(i);
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra("listaDeAñadidos", neveraInterna);
+                setResult(Activity.RESULT_OK, intent);
                 finish();
             }
         });
@@ -129,21 +192,14 @@ public class FormAnadirIngredientes extends AppCompatActivity{
         retrocederCambios.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Cambio de actividad, se le pasa a la otra actividad el fragment donde se encontraba
-                Context context = v.getContext();
-                Intent i = new Intent(context, MainActivity.class);
-                i.putExtra("viewpager_position", 2);
-                context.startActivity(i);
+                //Cambio de actividad
+                setResult(RESULT_CANCELED, null);
                 finish();
             }
         });
 
         //boton flotante + en la interfaz
         FloatingActionButton anadir = (FloatingActionButton) findViewById(R.id.anadir);
-
-        //alerta creada para cuando se incluye un ingrediente no valido
-        alert = new AlertDialog.Builder(this).create();
-        alert.setMessage("Ingrediente no válido");
 
         //Anade el ingrediente buscado a la lista temporal y permite anadir mas
         anadir.setOnClickListener(new OnClickListener() {
@@ -154,18 +210,36 @@ public class FormAnadirIngredientes extends AppCompatActivity{
                 inputMethodManager.hideSoftInputFromWindow(ingredienteBuscado.getWindowToken(), 0);
                 //Obtiene el texto introducido
                 String ingrediente = ingredienteBuscado.getText().toString();
-                if((ingrediente != null) && !ingrediente.isEmpty()){
+                if(!ingrediente.isEmpty()){
                     ingredienteBuscado.setText("");
                     //busca el ingrediente con el texto
                     Ingrediente encontrado = busquedaBinaria(datos, ingrediente);
                     if(encontrado != null) {
-                        buscados.add(encontrado);
-                        lv.deferNotifyDataSetChanged();
+                        Ingrediente repetido = busquedaBinaria(neveraInterna, encontrado.getNombre());
+                        if(repetido == null) {
+                            Ingrediente repetidoTemp = busquedaBinaria(buscados, encontrado.getNombre());
+                            if(repetidoTemp == null) {
+                                buscados.add(encontrado);
+                                lv.deferNotifyDataSetChanged();
+                            }
+                            else{
+                                Toast.makeText(v.getContext(), "¡Ya está en la lista!",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        else{
+                            Toast.makeText(v.getContext(), "¡Ya está en la nevera!",
+                                    Toast.LENGTH_LONG).show();
+                        }
                     }
-                    else alert.show();
+                    else {
+                        Toast.makeText(v.getContext(), "Ingrediente no encontrado",
+                                Toast.LENGTH_LONG).show();
+                    }
                 }
                 else{
-                    alert.show();
+                    Toast.makeText(v.getContext(), "Ingrediente no encontrado",
+                            Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -179,13 +253,13 @@ public class FormAnadirIngredientes extends AppCompatActivity{
 
         //Aqui se crearia un arrayList con los datos de los ingredientes de la bbdd
         datos = new ArrayList<>();
-        datos.add(new Ingrediente("aaaa", R.drawable.ic_favorite_black_24dp));
-        datos.add(new Ingrediente("bbbb", R.drawable.ic_favorite_black_24dp));
-        datos.add(new Ingrediente("cccc", R.drawable.ic_favorite_black_24dp));
-        datos.add(new Ingrediente("acv", R.drawable.ic_favorite_black_24dp));
-        datos.add(new Ingrediente("ewq", R.drawable.ic_favorite_black_24dp));
-        datos.add(new Ingrediente("fffsa", R.drawable.ic_favorite_black_24dp));
-        datos.add(new Ingrediente("esto es real", R.drawable.ic_favorite_black_24dp));
+        datos.add(new Ingrediente("aaaa", "rareza", R.drawable.ic_favorite_black_24dp));
+        datos.add(new Ingrediente("bbbb", "rareza",R.drawable.ic_favorite_black_24dp));
+        datos.add(new Ingrediente("cccc", "rareza",R.drawable.ic_favorite_black_24dp));
+        datos.add(new Ingrediente("acv","rareza", R.drawable.ic_favorite_black_24dp));
+        datos.add(new Ingrediente("ewq","rareza", R.drawable.ic_favorite_black_24dp));
+        datos.add(new Ingrediente("fffsa","rareza", R.drawable.ic_favorite_black_24dp));
+        datos.add(new Ingrediente("esto es real","rareza", R.drawable.ic_favorite_black_24dp));
         //Lo transformamos a un array de string y lo ordenamos, en caso de no estar ordenado
         //Esta ordenacion es opcional
         Collections.sort(datos, new Ingrediente());

@@ -17,16 +17,19 @@ import fdi.ucm.thefridge.activities.DetailActivity;
  * Created by Carlos Casado González on 02/05/2016.
  */
 public class RecetasContentFragment extends Fragment {
+    private int CODIGO_ACTIVIDAD = 2;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        RecyclerView recyclerView = (RecyclerView) inflater.inflate(
-                R.layout.recycler_view, container, false);
+        View rootView = inflater.inflate(R.layout.recycler_view, container, false);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
         ContentAdapter adapter = new ContentAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        return recyclerView;
+
+        return rootView;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -90,7 +90,7 @@ public class FormAnadirIngredientes extends AppCompatActivity{
             @Override
             public boolean onEditorAction(TextView v, int actionId,
                                           KeyEvent event) {
-                if (event != null&& (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                if (event != null ) {
                     InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     in.hideSoftInputFromWindow(ingredienteBuscado.getWindowToken(), 0);
                     //Obtiene el texto introducido

@@ -2,9 +2,7 @@
     <string name="app_name">The fridge</string>
     <string name="action_settings_registrar">Registrar</string>
     <string name="action_settings_login">Login</string>
-=======
     <string name="action_settings">Settings</string>
->>>>>>> 3191efd6b00689485fc5402046882a31d77b5299
     <string name="item_title">Palais Garnier</string>
     <string name="item_desc">The Palais Garnier which locates in Paris was built from 1861 for
         the Paris Opera.

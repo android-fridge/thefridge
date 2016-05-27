@@ -24,6 +24,7 @@ import fdi.ucm.thefridge.R;
 import fdi.ucm.thefridge.fragments.IngredientesContentFragment;
 import fdi.ucm.thefridge.fragments.OneclicContentFragment;
 import fdi.ucm.thefridge.fragments.RecetasContentFragment;
+import fdi.ucm.thefridge.fragments.TimelineContentFragment;
 import fdi.ucm.thefridge.model.SesionUsuario;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new OneclicContentFragment(), "OneClic");
         adapter.addFragment(new RecetasContentFragment(), "Receta");
         adapter.addFragment(new IngredientesContentFragment(), "Nevera");
+        adapter.addFragment(new TimelineContentFragment(), "Timeline");
         viewPager.setAdapter(adapter);
 
         TabLayout tabs= (TabLayout) findViewById(R.id.tabs);

@@ -18,8 +18,9 @@ import android.widget.ImageView;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import fdi.ucm.thefridge.BD.DBHelper;
+import fdi.ucm.thefridge.data.DBHelper;
 import fdi.ucm.thefridge.R;
+import fdi.ucm.thefridge.data.DatabaseAccess;
 import fdi.ucm.thefridge.model.Usuario;
 
 /**
@@ -35,14 +36,14 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressDialog waitDialog;
     private AlertDialog userDialog;
     private String username, pass;
-    private DBHelper dbHelper;
+    private DatabaseAccess dbAccess;
 
     /* */
     private static final String PASSWORD_PATTERN="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dbHelper=new DBHelper(this);
+        dbAccess=DatabaseAccess.getInstance(this);
         setContentView(R.layout.activity_register);
         pattern=Pattern.compile(PASSWORD_PATTERN);
         pass1Ok=false;
@@ -164,8 +165,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                 try{
                     Usuario usuario = new Usuario(username, pass);
-                    dbHelper.insert(usuario);
+                    dbAccess.open();
+                    dbAccess.insert(usuario);
                     closeWaitDialog();
+                    dbAccess.close();
                     showDialogMessage("¡Registro completado!", "Bienvenido, "+username, true);
                 }catch(SQLiteConstraintException e){
                     closeWaitDialog();

@@ -7,13 +7,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import fdi.ucm.thefridge.BD.DBHelper;
+import fdi.ucm.thefridge.data.DBHelper;
 import fdi.ucm.thefridge.R;
+import fdi.ucm.thefridge.data.DatabaseAccess;
 import fdi.ucm.thefridge.model.SesionUsuario;
 import fdi.ucm.thefridge.model.Usuario;
 
@@ -22,7 +22,7 @@ import fdi.ucm.thefridge.model.Usuario;
  */
 public class LoginActivity extends AppCompatActivity {
     private Button buttonLogin, buttonRegister;
-    private DBHelper dbHelper;
+    private DatabaseAccess dbAccess;
     private EditText userId, password;
     private Usuario usuario;
     private AlertDialog userDialog;
@@ -33,13 +33,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         buttonLogin=(Button) findViewById(R.id.button_login);
         buttonRegister=(Button) findViewById(R.id.button_acceso_registro);
-        dbHelper=new DBHelper(this);
+        dbAccess=DatabaseAccess.getInstance(this);
+
         userId=(EditText)findViewById(R.id.usuarioLogin);
         password=(EditText)findViewById(R.id.passwordLogin);
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                usuario=dbHelper.get(userId.getText().toString());
+                dbAccess.open();
+                usuario=dbAccess.get(userId.getText().toString());
 
                 if (usuario==null){
                     closeWaitDialog();
@@ -54,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                         closeWaitDialog();
                         showDialogMessage("¡Error!", "Usuario o contraseña incorrectos, ", false);
                     }
-
+                dbAccess.close();
             }
         });
         buttonRegister.setOnClickListener(new View.OnClickListener(){

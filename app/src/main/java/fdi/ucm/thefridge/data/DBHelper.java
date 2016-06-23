@@ -1,4 +1,4 @@
-package fdi.ucm.thefridge.BD;
+package fdi.ucm.thefridge.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,8 +8,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.SyncStateContract;
-import android.util.Log;
 
 import fdi.ucm.thefridge.model.Usuario;
 

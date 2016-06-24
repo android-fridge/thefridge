@@ -60,25 +60,9 @@
             android:paddingRight="@dimen/md_keylines"
             android:paddingTop="@dimen/md_keylines">
 
-
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-
-
-                <ImageButton
-                    android:id="@+id/imagenReloj"
-                    android:layout_width="55dp"
-                    android:contentDescription=""
-                    android:layout_height="55dp"
-                    android:src="@drawable/clock"
-                    android:background="#ffffff"
-                    android:clickable="false"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="68dp" />
 
                 <TextView
                     android:id="@+id/tiempo_receta"
@@ -89,23 +73,6 @@
                     android:textSize="@dimen/article_titles"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true" />
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-                <ImageButton
-                    android:id="@+id/imagenPersona"
-                    android:layout_width="55dp"
-                    android:contentDescription=""
-                    android:layout_height="55dp"
-                    android:src="@drawable/clock"
-                    android:background="#ffffff"
-                    android:clickable="false"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="68dp" />
 
                 <TextView
                     android:id="@+id/personas_receta"
@@ -115,22 +82,19 @@
                     android:text=""
                     android:textSize="@dimen/article_titles"
                     android:layout_centerVertical="true"
+                    android:layout_alignLeft="@id/tiempo_receta" />
+
+                <ImageButton
+                    android:id="@+id/imagen_dificultad"
+                    android:layout_width="98px"
+                    android:layout_height="18px"
+                    android:contentDescription=""
+                    android:src="@drawable/ic_dificultad_max"
+                    android:background="#ffffff"
+                    android:clickable="false"
+                    android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true" />
             </RelativeLayout>
-            <TextView
-                android:id="@+id/descripcion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="?attr/colorAccent"
-                android:text="Description"
-                android:textSize="@dimen/article_titles"
-                android:layout_marginBottom="@dimen/md_keylines" />
-
-            <TextView
-                android:id="@+id/descripcion_receta"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -145,26 +109,8 @@
                     android:text="Pasos"
                     android:textSize="@dimen/article_titles"
                     android:layout_marginBottom="@dimen/md_keylines" />
-                <ImageButton
-                    android:id="@+id/imagen_dificultad"
-                    android:layout_width="55dp"
-                    android:contentDescription=""
-                    android:layout_height="55dp"
-                    android:src="@drawable/ic_dificultad_max"
-                    android:background="#ffffff"
-                    android:clickable="false"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true" />
 
-                <TextView
-                    android:id="@+id/dificultad"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:textColor="?attr/colorAccent"
-                    android:text="Dificultad"
-                    android:textSize="@dimen/article_titles"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/imagen_dificultad" />
+
             </RelativeLayout>
 
 

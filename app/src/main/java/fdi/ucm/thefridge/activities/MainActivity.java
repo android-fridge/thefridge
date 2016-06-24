@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         ViewPager viewPager=(ViewPager) findViewById(R.id.viewpager);
         MyAdapter adapter = new MyAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OneclicContentFragment(), "OneClic");
+        adapter.addFragment(new OneclicContentFragment(), "OneClick");
         adapter.addFragment(new RecetasContentFragment(), "Receta");
         adapter.addFragment(new IngredientesContentFragment(), "Nevera");
         adapter.addFragment(new TimelineContentFragment(), "Timeline");

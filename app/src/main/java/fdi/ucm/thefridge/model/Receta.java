@@ -6,37 +6,32 @@ package fdi.ucm.thefridge.model;
 public class Receta {
 
     String nombre;
-    String descripcion;
-    int photoId;
+    String dificultad;
+    String duracion;
+    String personas;
+    int _id;
 
-    public Receta(String nombre, String descripcion, int photoId) {
+    public Receta(int _id, String nombre, String dificultad, String duracion, String personas) {
         this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.photoId = photoId;
+        this.dificultad = dificultad;
+        this.duracion = duracion;
+        this.personas = personas;
+        this._id = _id;
     }
 
     public String getNombre() {
         return nombre;
     }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public int getPhotoId() {
-        return photoId;
-    }
-
-    public void setPhotoId(int photoId) {
-        this.photoId = photoId;
-    }
+    public String getPersonas() {return personas;}
+    public void setPersonas(String personas) {this.personas = personas;}
+    public String getDificultad() {return dificultad;}
+    public void setDificultad(String dificultad) {this.dificultad = dificultad;}
+    public String getDuracion() {return duracion;}
+    public void setDuracion(String duracion) {this.duracion = duracion;}
+    public int get_id() {return _id;}
+    public void set_id(int _id) {this._id = _id;}
 
 }

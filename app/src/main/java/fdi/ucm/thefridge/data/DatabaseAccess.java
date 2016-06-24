@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import fdi.ucm.thefridge.model.Receta;
 import fdi.ucm.thefridge.model.Usuario;
 
 /**
@@ -65,12 +66,14 @@ public class DatabaseAccess {
      *
      * @return a List of quotes
      */
-    public List<String> getQuotes() {
-        List<String> list = new ArrayList<>();
+    public List<Receta> getRecetas() {
+        List<Receta> list = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT * FROM recetas", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            list.add(cursor.getString(0));
+            Receta r = new Receta(cursor.getInt(0),cursor.getString(1),cursor.getString(2)
+                    ,cursor.getString(3),cursor.getString(4));
+            list.add(r);
             cursor.moveToNext();
         }
         cursor.close();

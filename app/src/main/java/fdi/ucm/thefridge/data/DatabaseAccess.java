@@ -138,4 +138,30 @@ public class DatabaseAccess {
         database.update("usuarios",values,"nombre="+usr.getId(),null);
     }
 
+    public ArrayList<String> GetlistIngredientesReceta(int id) {
+        ArrayList<String> list = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT descripcion FROM receta_ingredientes WHERE id_receta="+
+                id+" AND id_ingrediente IS NULL", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            String desc = cursor.getString(0);
+            list.add(desc);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return list;
+    }
+
+    public ArrayList<String> getPasosReceta(int id) {
+        ArrayList<String> list = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT descripcion FROM receta_pasos WHERE id_receta="+id, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            String desc = cursor.getString(0);
+            list.add(desc);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return list;
+    }
 }

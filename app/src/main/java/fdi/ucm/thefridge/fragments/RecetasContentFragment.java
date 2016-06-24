@@ -58,53 +58,13 @@ public class RecetasContentFragment extends Fragment {
             details = (Button) itemView.findViewById(R.id.action_button);
             share = (ImageButton) itemView.findViewById(R.id.share_button);
 
-            details.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, DetailActivity.class);
-                    context.startActivity(intent);
-                }
-            });
-
-            share.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, DetailActivity.class);
-                    context.startActivity(intent);
-                }
-            });
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, DetailActivity.class);
-                    context.startActivity(intent);
-                }
-            });
         }
-
-        /*public RecetaViewHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.item_recetas, parent, false));
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, DetailActivity.class);
-                    context.startActivity(intent);
-                }
-            });
-        }*/
-
 
     }
     /**
      * Adapter to display recycler view.
      */
     public static class ContentAdapter extends RecyclerView.Adapter<RecetaViewHolder> {
-        // Set numbers of List in RecyclerView.
-        private static final int LENGTH = 18;
         private List<Receta> recetas;
         private Context context;
 
@@ -121,13 +81,41 @@ public class RecetasContentFragment extends Fragment {
             View recetaView = inflater.inflate(R.layout.item_recetas, parent, false);
 
             RecetaViewHolder viewHolder = new RecetaViewHolder(recetaView);
+
             return viewHolder;
         }
 
         @Override
         public void onBindViewHolder(RecetaViewHolder holder, int position) {
-            Receta receta = recetas.get(position);
+            final Receta receta = recetas.get(position);
             holder.nombreTextView.setText(receta.getNombre());
+            holder.details.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra("Receta", receta);
+                    context.startActivity(intent);
+                }
+            });
+
+            holder.share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra("Receta", receta);
+                    context.startActivity(intent);                }
+            });
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra("Receta", receta);
+                    context.startActivity(intent);
+                }
+            });
         }
 
         @Override

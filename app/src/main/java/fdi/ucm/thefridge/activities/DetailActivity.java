@@ -5,6 +5,7 @@ package fdi.ucm.thefridge.activities;
  */
 
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
@@ -15,8 +16,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import fdi.ucm.thefridge.R;
+import fdi.ucm.thefridge.data.DatabaseAccess;
 import fdi.ucm.thefridge.model.Ingrediente;
 import fdi.ucm.thefridge.model.ListViewIngredientesAdapter;
+import fdi.ucm.thefridge.model.Receta;
 
 /**
  * Provides UI for the Detail page with Collapsing Toolbar.
@@ -25,10 +28,11 @@ public class DetailActivity extends AppCompatActivity {
 
     ListView lving;
     ListView lvrecetas;
-    ArrayList<Ingrediente> listIngredientes;
+    ArrayList<String> listIngredientes;
     ArrayList<String> pasosReceta;
     ListViewIngredientesAdapter adapter;
-    ArrayAdapter<String> adaptador;
+    ArrayAdapter<String> adaptador_pasos;
+    ArrayAdapter<String> adaptador_ingredientes;
     ImageButton dificultad;
     TextView descripcion;
     TextView horas;
@@ -39,19 +43,42 @@ public class DetailActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        listIngredientes = GetlistIngredientesReceta();
-        pasosReceta = getPasosReceta();
+        Receta receta = (Receta)getIntent().getSerializableExtra("Receta");
+
+        DatabaseAccess db = DatabaseAccess.getInstance(getBaseContext());
+        db.open();
+        listIngredientes = db.GetlistIngredientesReceta(receta.get_id());
+        pasosReceta = db.getPasosReceta(receta.get_id());
+        db.close();
+
+
+
         lving = (ListView) findViewById(R.id.ingredientes_de_recetas);
-        adapter = new ListViewIngredientesAdapter(this, listIngredientes);
-        lving.setAdapter(adapter);
+        adaptador_ingredientes = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, listIngredientes);
+        lving.setAdapter(adaptador_ingredientes);
 
         lvrecetas = (ListView) findViewById(R.id.pasos_de_receta);
-        adaptador = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, pasosReceta);
-        lvrecetas.setAdapter(adaptador);
+        adaptador_pasos = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, pasosReceta);
+        lvrecetas.setAdapter(adaptador_pasos);
 
         dificultad = (ImageButton) findViewById(R.id.imagen_dificultad);
-
-        descripcion = (TextView) findViewById(R.id.descripcion_receta);
+        switch (receta.getDificultad().charAt(0)){
+            case '1':
+                dificultad.setImageResource(R.drawable.d1o5dots);
+                break;
+            case '2':
+                dificultad.setImageResource(R.drawable.d2o5dots);
+                break;
+            case '3':
+                dificultad.setImageResource(R.drawable.d3o5dots);
+                break;
+            case '4':
+                dificultad.setImageResource(R.drawable.d4o5dots);
+                break;
+            case '5':
+                dificultad.setImageResource(R.drawable.d5o5dots);
+                break;
+        }
 
         horas = (TextView) findViewById(R.id.tiempo_receta);
 
@@ -62,17 +89,9 @@ public class DetailActivity extends AppCompatActivity {
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         // Set title of Detail page
-        collapsingToolbar.setTitle(getString(R.string.item_title));
+        collapsingToolbar.setTitle(receta.getNombre());
+        horas.setText(receta.getDuracion());
+        personas.setText(receta.getPersonas());
     }
 
-    private ArrayList<String> getPasosReceta() {
-        ArrayList<String> r = new ArrayList<>();
-
-        return r;
-    }
-
-    private ArrayList<Ingrediente> GetlistIngredientesReceta() {
-        ArrayList<Ingrediente> ing = new ArrayList<>();
-        return ing;
-    }
 }

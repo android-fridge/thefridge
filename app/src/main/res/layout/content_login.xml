@@ -24,7 +24,6 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
         android:id="@+id/usuarioLogin"
         android:hint="Usuario"
         android:layout_above="@+id/passwordLogin"
@@ -47,10 +46,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="Log In"
         android:id="@+id/button_login"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="75dp"
         android:layout_marginBottom="66dp"
         android:background="@color/colorAccent"
         android:textColor="@color/cardview_light_background"
@@ -59,7 +58,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SignUp"
+        android:text="Sign Up"
         android:id="@+id/button_acceso_registro"
         android:layout_marginLeft="5dp"
         android:layout_alignTop="@+id/button_login"

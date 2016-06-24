@@ -1,9 +1,11 @@
 package fdi.ucm.thefridge.model;
 
+import java.io.Serializable;
+
 /**
  * Created by mizlap on 08/05/2016.
  */
-public class Receta {
+public class Receta implements Serializable{
 
     String nombre;
     String dificultad;

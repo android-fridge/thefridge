@@ -88,9 +88,9 @@ public class DatabaseAccess {
         Cursor cursor = database.rawQuery("SELECT * FROM ingredientes", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            String nombre = cursor.getString(0);
-            String categoria = cursor.getString(1);
-            String rareza = cursor.getString(2).substring(0,1).toUpperCase();
+            String nombre = cursor.getString(1);
+            String categoria = cursor.getString(2);
+            String rareza = cursor.getString(3).substring(0,1).toUpperCase();
             Ingrediente ing = new Ingrediente(nombre, rareza, categoria);
             list.add(ing);
             cursor.moveToNext();

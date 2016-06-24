@@ -58,7 +58,7 @@ public class ListViewIngredientesAdapter extends ArrayAdapter<Ingrediente> {
 
         //dar texto e imagen
         nombre.setText(ingredientes.get(position).getNombre());
-        rareza.setText(ingredientes.get(position).getRareza());
+        rareza.setText("Rareza: " + ingredientes.get(position).getRareza());
         categoria.setText(ingredientes.get(position).getcategoria());
         return convertView;
     }

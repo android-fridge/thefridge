@@ -7,11 +7,10 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import fdi.ucm.thefridge.model.Receta;
+import fdi.ucm.thefridge.model.Ingrediente;
 import fdi.ucm.thefridge.model.Usuario;
 
 /**
@@ -74,6 +73,27 @@ public class DatabaseAccess {
             Receta r = new Receta(cursor.getInt(0),cursor.getString(1),cursor.getString(2)
                     ,cursor.getString(3),cursor.getString(4));
             list.add(r);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return list;
+    }
+
+    /**
+     * Read all recetas from the database.
+     *
+     * @return a List of ingredientes
+     */
+    public ArrayList<Ingrediente> getIngredientes() {
+        ArrayList<Ingrediente> list = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT * FROM ingredientes", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            String nombre = cursor.getString(1);
+            String categoria = cursor.getString(2);
+            String rareza = cursor.getString(3).substring(0,1).toUpperCase();
+            Ingrediente ing = new Ingrediente(nombre, rareza, categoria);
+            list.add(ing);
             cursor.moveToNext();
         }
         cursor.close();

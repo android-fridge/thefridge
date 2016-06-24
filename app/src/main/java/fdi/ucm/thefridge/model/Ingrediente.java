@@ -13,20 +13,20 @@ import java.util.Comparator;
 public class Ingrediente implements Comparator<Ingrediente>, Parcelable {
     private String nombre;
     private String rareza;
-    private int img; //Las referencias a las imagenes se devuelven como enteros
+    private String categoria; //Las referencias a las imagenes se devuelven como enteros
 
     public Ingrediente() {
     }
-    public Ingrediente(String nombre, String rareza, int img){
+    public Ingrediente(String nombre, String rareza, String categoria){
         this.nombre = nombre;
         this.rareza = rareza;
-        this.img = img;
+        this.categoria = categoria;
     }
 
     public Ingrediente(Parcel in) {
         this.nombre = in.readString();
         this.rareza = in.readString();
-        this.img = in.readInt();
+        this.categoria = in.readString();
     }
 
     public String getNombre(){
@@ -45,12 +45,12 @@ public class Ingrediente implements Comparator<Ingrediente>, Parcelable {
         this.rareza = rareza;
     }
 
-    public int getImg(){
-        return img;
+    public String getcategoria(){
+        return categoria;
     }
 
-    public void setImg(int img){
-        this.img = img;
+    public void setcategoria(String categoria){
+        this.categoria = categoria;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class Ingrediente implements Comparator<Ingrediente>, Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(nombre);
         dest.writeString(rareza);
-        dest.writeInt(img);
+        dest.writeString(categoria);
     }
 
     public static final Parcelable.Creator<Ingrediente> CREATOR = new Parcelable.Creator<Ingrediente>() {

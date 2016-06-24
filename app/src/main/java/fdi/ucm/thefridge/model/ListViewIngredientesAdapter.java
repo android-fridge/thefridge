@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -40,7 +39,7 @@ public class ListViewIngredientesAdapter extends ArrayAdapter<Ingrediente> {
         //CardView card = (CardView)  convertView.findViewById(R.id.card_ingrediente);
         TextView nombre = (TextView) convertView.findViewById(R.id.nombre_ingrediente);
         TextView rareza = (TextView) convertView.findViewById(R.id.rareza_ingrediente);
-        ImageView img = (ImageView) convertView.findViewById(R.id.imagen_ingrediente);
+        TextView categoria = (TextView) convertView.findViewById(R.id.categoria_ingrediente);
         ImageButton delButton = (ImageButton) convertView.findViewById(R.id.botonBorrar);
 
         //Aciones de los botones de borrado
@@ -50,7 +49,7 @@ public class ListViewIngredientesAdapter extends ArrayAdapter<Ingrediente> {
                 //do something
                 String nombre = ingredientes.get(position).getNombre();
                 String rareza = ingredientes.get(position).getRareza();
-                int img = ingredientes.get(position).getImg();
+                String categoria = ingredientes.get(position).getcategoria();
                 ingredientes.remove(position); //or some other task
                 notifyDataSetChanged();
             }
@@ -59,8 +58,8 @@ public class ListViewIngredientesAdapter extends ArrayAdapter<Ingrediente> {
 
         //dar texto e imagen
         nombre.setText(ingredientes.get(position).getNombre());
-        rareza.setText(ingredientes.get(position).getRareza());
-        img.setImageResource(ingredientes.get(position).getImg());
+        rareza.setText("Rareza: " + ingredientes.get(position).getRareza());
+        categoria.setText(ingredientes.get(position).getcategoria());
         return convertView;
     }
 }

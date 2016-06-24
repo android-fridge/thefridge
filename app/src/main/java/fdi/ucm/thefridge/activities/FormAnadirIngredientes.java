@@ -1,7 +1,6 @@
 package fdi.ucm.thefridge.activities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,9 +42,8 @@ public class FormAnadirIngredientes extends AppCompatActivity{
     private ListView lv;
     private LinearLayout all;
     private ListViewIngredientesAdapter adapter;
-    private AlertDialog alert;
-    private ArrayList<Ingrediente> datos;
     private ArrayList<Ingrediente> neveraInterna;
+    private ArrayList<Ingrediente> ingredientesDB;
     private ArrayList<String> nombresDeIngredientes;
 
     @Override
@@ -54,11 +52,15 @@ public class FormAnadirIngredientes extends AppCompatActivity{
         setContentView(R.layout.activity_form_anadir_ingredientes);
 
         neveraInterna = new ArrayList<>();
+        ingredientesDB = new ArrayList<>();
         Bundle extras = getIntent().getExtras();
         if(extras != null){
             neveraInterna =  extras.getParcelableArrayList("nevera");
-            if(neveraInterna == null)
+            ingredientesDB =  extras.getParcelableArrayList("ingredientesDB");
+            if(neveraInterna == null) {
                 neveraInterna = new ArrayList<>();
+                ingredientesDB = new ArrayList<>();
+            }
         }
 
         //Ingredientes buscados
@@ -98,7 +100,7 @@ public class FormAnadirIngredientes extends AppCompatActivity{
                     if(!ingrediente.isEmpty()){
                         ingredienteBuscado.setText("");
                         //busca el ingrediente con el texto
-                        Ingrediente encontrado = busquedaBinaria(datos, ingrediente);
+                        Ingrediente encontrado = busquedaBinaria(ingredientesDB, ingrediente);
                         if(encontrado != null) {
                             Ingrediente repetido = busquedaBinaria(neveraInterna, encontrado.getNombre());
                             if(repetido == null) {
@@ -159,7 +161,7 @@ public class FormAnadirIngredientes extends AppCompatActivity{
                 {
                     escritor=new OutputStreamWriter(openFileOutput("intern_fridge.txt", Context.MODE_PRIVATE));
                     for(int i = 0; i < buscados.size(); i++) {
-                        escritor.write(neveraInterna.get(i).getNombre() + "," + neveraInterna.get(i).getRareza() + "," + neveraInterna.get(i).getImg() + "\n");
+                        escritor.write(neveraInterna.get(i).getNombre() + "," + neveraInterna.get(i).getRareza() + "," + neveraInterna.get(i).getcategoria() + "\n");
                     }
                     escritor.flush();
                     escritor.close();
@@ -213,7 +215,7 @@ public class FormAnadirIngredientes extends AppCompatActivity{
                 if(!ingrediente.isEmpty()){
                     ingredienteBuscado.setText("");
                     //busca el ingrediente con el texto
-                    Ingrediente encontrado = busquedaBinaria(datos, ingrediente);
+                    Ingrediente encontrado = busquedaBinaria(ingredientesDB, ingrediente);
                     if(encontrado != null) {
                         Ingrediente repetido = busquedaBinaria(neveraInterna, encontrado.getNombre());
                         if(repetido == null) {
@@ -250,22 +252,9 @@ public class FormAnadirIngredientes extends AppCompatActivity{
      * @return Array con los nombres de los ingredientes, si no existen datos, es null
      */
     private ArrayList<String> obtenerIngredientes(){
-
-        //Aqui se crearia un arrayList con los datos de los ingredientes de la bbdd
-        datos = new ArrayList<>();
-        datos.add(new Ingrediente("aaaa", "rareza", R.drawable.ic_favorite_black_24dp));
-        datos.add(new Ingrediente("bbbb", "rareza",R.drawable.ic_favorite_black_24dp));
-        datos.add(new Ingrediente("cccc", "rareza",R.drawable.ic_favorite_black_24dp));
-        datos.add(new Ingrediente("acv","rareza", R.drawable.ic_favorite_black_24dp));
-        datos.add(new Ingrediente("ewq","rareza", R.drawable.ic_favorite_black_24dp));
-        datos.add(new Ingrediente("fffsa","rareza", R.drawable.ic_favorite_black_24dp));
-        datos.add(new Ingrediente("esto es real","rareza", R.drawable.ic_favorite_black_24dp));
-        //Lo transformamos a un array de string y lo ordenamos, en caso de no estar ordenado
-        //Esta ordenacion es opcional
-        Collections.sort(datos, new Ingrediente());
         nombresDeIngredientes = new ArrayList<>();
-        for(int i = 0; i < datos.size(); i++){
-            nombresDeIngredientes.add(datos.get(i).getNombre());
+        for(int i = 0; i < ingredientesDB.size(); i++){
+            nombresDeIngredientes.add(ingredientesDB.get(i).getNombre());
         }
         return nombresDeIngredientes;
     }

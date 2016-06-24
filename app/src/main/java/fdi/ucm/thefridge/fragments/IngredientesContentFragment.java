@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.ListView;
 
 import java.io.BufferedReader;
@@ -21,6 +20,7 @@ import java.util.ArrayList;
 
 import fdi.ucm.thefridge.R;
 import fdi.ucm.thefridge.activities.FormAnadirIngredientes;
+import fdi.ucm.thefridge.data.DatabaseAccess;
 import fdi.ucm.thefridge.model.Ingrediente;
 import fdi.ucm.thefridge.model.ListViewIngredientesAdapter;
 
@@ -29,28 +29,26 @@ import fdi.ucm.thefridge.model.ListViewIngredientesAdapter;
  */
 public class IngredientesContentFragment extends Fragment{
 
-    ListView lv;
-    ArrayList<Ingrediente> listIngredientes;
-    ListViewIngredientesAdapter adapter;
-    View rootView;
-    WebView form;
+    private DatabaseAccess dbAccess;
+    private ListView lv;
+    private ArrayList<Ingrediente> listIngredientes;
+    private ListViewIngredientesAdapter adapter;
+    private View rootView;
+    private ArrayList<Ingrediente> listIngredientesDB;
     private static final int CODIGO_ACTIVIDAD = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        dbAccess=DatabaseAccess.getInstance(this.getContext());
         rootView = inflater.inflate(R.layout.list_ingrediente, container, false);
         listIngredientes = GetlistIngredientes();
+        listIngredientesDB = GetlistIngredientesDB();
         lv = (ListView)rootView.findViewById(R.id.list_ingredientes);
         adapter = new ListViewIngredientesAdapter(getActivity(), listIngredientes);
         lv.setAdapter(adapter);
         FloatingActionButton addButton = (FloatingActionButton) rootView.findViewById(R.id.boton_anadir);
 
-       /** form = (WebView) rootView.findViewById(R.id.webview);
-        form.getSettings().setDomStorageEnabled(true);
-        form.getSettings().setUseWideViewPort(true);
-        form.getSettings().setJavaScriptEnabled(true);*/
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,22 +56,9 @@ public class IngredientesContentFragment extends Fragment{
                 Intent intent = new Intent(context, FormAnadirIngredientes.class);
                 //Pasar datos a la actividad
                 intent.putExtra("nevera", listIngredientes);
+                intent.putExtra("ingredientesDB", listIngredientesDB);
                 //Necesario para activar la subactividad
                 startActivityForResult(intent, CODIGO_ACTIVIDAD);
-
-                /** form.loadUrl("https://amatellanes.wordpress.com/");
-                //Forzar a la aplicacion para que habra enlaces internos
-                form.setWebViewClient(new WebViewClient() {
-                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                        form.getSettings().setJavaScriptEnabled(true); // Permitimos que se ejecute JavaScript
-                        form.getSettings().setLoadWithOverviewMode(true); // Ajustamos la vista para que no se vea demasiado grande
-                        form.getSettings().setUseWideViewPort(true); // habilitamos el zoom
-                        form.getSettings().setBuiltInZoomControls(true); // habilitamos el zoom
-                        form.setInitialScale(100); // Escala inicial al 100%
-                        view.loadUrl(url);
-                        return true;
-                    }
-                });*/
 
             }
         });
@@ -91,7 +76,7 @@ public class IngredientesContentFragment extends Fragment{
             {
                 escritor=new OutputStreamWriter(getActivity().openFileOutput("intern_fridge.txt", Context.MODE_PRIVATE));
                 for(int i = 0; i < listIngredientes.size(); i++) {
-                    escritor.write(listIngredientes.get(i).getNombre() + "," + listIngredientes.get(i).getRareza() + "," + listIngredientes.get(i).getImg() + "\n");
+                    escritor.write(listIngredientes.get(i).getNombre() + "," + listIngredientes.get(i).getRareza() + "," + listIngredientes.get(i).getcategoria() + "\n");
                 }
                 escritor.flush();
                 escritor.close();
@@ -126,7 +111,7 @@ public class IngredientesContentFragment extends Fragment{
             while ((line = fin.readLine()) != null){
 
                 String[] div = line.split(",");
-                Ingrediente in = new Ingrediente(div[0], div[1], Integer.parseInt(div[2]));
+                Ingrediente in = new Ingrediente(div[0], div[1], div[2].substring(0,1));
                 listaIngrediente.add(in);
             }
             fin.close();
@@ -138,6 +123,18 @@ public class IngredientesContentFragment extends Fragment{
         }
 
         return listaIngrediente;
+    }
+
+    /**
+     * Metodo para añadir datos a la lista desde la BD
+     * @return arrayList con los datos de la BD
+     */
+    private ArrayList<Ingrediente> GetlistIngredientesDB(){
+        ArrayList<Ingrediente> listaIngredienteDB;
+        dbAccess.open();
+        listaIngredienteDB = dbAccess.getIngredientes();
+        dbAccess.close();
+        return listaIngredienteDB;
     }
 
     /**

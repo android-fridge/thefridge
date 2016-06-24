@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import fdi.ucm.thefridge.model.Ingrediente;
 import fdi.ucm.thefridge.model.Usuario;
 
 /**
@@ -71,6 +72,27 @@ public class DatabaseAccess {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             list.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return list;
+    }
+
+    /**
+     * Read all recetas from the database.
+     *
+     * @return a List of ingredientes
+     */
+    public ArrayList<Ingrediente> getIngredientes() {
+        ArrayList<Ingrediente> list = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT * FROM ingredientes", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            String nombre = cursor.getString(0);
+            String categoria = cursor.getString(1);
+            String rareza = cursor.getString(2).substring(0,1).toUpperCase();
+            Ingrediente ing = new Ingrediente(nombre, rareza, categoria);
+            list.add(ing);
             cursor.moveToNext();
         }
         cursor.close();

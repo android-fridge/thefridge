@@ -67,7 +67,7 @@ public class DatabaseAccess {
      */
     public List<Receta> getRecetas() {
         List<Receta> list = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT * FROM recetas", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM recetas ORDER BY nombre", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Receta r = new Receta(cursor.getInt(0),cursor.getString(1),cursor.getString(2)

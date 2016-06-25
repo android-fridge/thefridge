@@ -42,8 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/card_text"
             style="?android:attr/borderlessButtonStyle"
-            android:textColor="?attr/colorPrimary"
-            android:text="Ver mas" />
+            android:textColor="?attr/colorPrimaryDark"
+            android:text="Detalles" />
 
         <ImageButton
             android:id="@+id/share_button"

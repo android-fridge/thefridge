@@ -8,13 +8,20 @@ import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Filterable;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fdi.ucm.thefridge.R;
@@ -27,25 +34,85 @@ import fdi.ucm.thefridge.model.Receta;
 /**
  * Created by Carlos Casado González on 02/05/2016.
  */
-public class RecetasContentFragment extends Fragment {
+public class RecetasContentFragment extends Fragment implements AdapterView.OnItemSelectedListener,SearchView.OnQueryTextListener {
     private int CODIGO_ACTIVIDAD = 2;
+    private List<Receta> mModels;
+    ContentAdapter mAdapter;
+    RecyclerView mRecyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recycler_view, container, false);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
         Context c = getContext();
         DatabaseAccess db = DatabaseAccess.getInstance(c);
         db.open();
-        List<Receta> recetas = db.getRecetas();
+        mModels = db.getRecetas();
         db.close();
-        ContentAdapter adapter = new ContentAdapter(c,recetas);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        //RecyclerView
+        mAdapter = new ContentAdapter(c,mModels);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        //Spinner
+        Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner);
+        spinner.setOnItemSelectedListener(this);
+
+        List<String> categories = new ArrayList<String>();
+        categories.add("Todas las recetas");
+        categories.add("Mi nevera");
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(c, android.R.layout.simple_spinner_item, categories);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+
+        SearchView sView = (SearchView)rootView.findViewById(R.id.action_search);
+        sView.setOnQueryTextListener(this);
 
         return rootView;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        final List<Receta> filteredModelList = filter(mModels, query);
+        mAdapter.setModels(filteredModelList);
+        //mAdapter.animateTo(filteredModelList);
+        mAdapter.notifyDataSetChanged();
+        mRecyclerView.scrollToPosition(0);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    private List<Receta> filter(List<Receta> models, String query) {
+        query = query.toLowerCase();
+
+        final List<Receta> filteredModelList = new ArrayList<>();
+        for (Receta model : models) {
+            final String text = model.getNombre().toLowerCase();
+            if (text.contains(query)) {
+                filteredModelList.add(model);
+            }
+        }
+        return filteredModelList;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        String item = parent.getItemAtPosition(position).toString();
+
+        // Showing selected spinner item
+        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+    }
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO Auto-generated method stub
     }
 
     public static class RecetaViewHolder extends RecyclerView.ViewHolder {
@@ -66,7 +133,7 @@ public class RecetasContentFragment extends Fragment {
     /**
      * Adapter to display recycler view.
      */
-    public static class ContentAdapter extends RecyclerView.Adapter<RecetaViewHolder> {
+    public static class ContentAdapter extends RecyclerView.Adapter<RecetaViewHolder>{
         private List<Receta> recetas;
         private Context context;
 
@@ -123,5 +190,10 @@ public class RecetasContentFragment extends Fragment {
         public int getItemCount() {
             return recetas.size();
         }
+
+        public void setModels(List<Receta> models) {
+            recetas = new ArrayList<>(models);
+        }
+
     }
 }

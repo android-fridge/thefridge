@@ -3,6 +3,7 @@ package fdi.ucm.thefridge.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Contacts;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import java.util.List;
 
 import fdi.ucm.thefridge.R;
 import fdi.ucm.thefridge.activities.DetailActivity;
+import fdi.ucm.thefridge.activities.PhotoActivity;
 import fdi.ucm.thefridge.data.DatabaseAccess;
 import fdi.ucm.thefridge.model.Ingrediente;
 import fdi.ucm.thefridge.model.Receta;
@@ -81,7 +83,6 @@ public class RecetasContentFragment extends Fragment {
             View recetaView = inflater.inflate(R.layout.item_recetas, parent, false);
 
             RecetaViewHolder viewHolder = new RecetaViewHolder(recetaView);
-
             return viewHolder;
         }
 
@@ -103,9 +104,9 @@ public class RecetasContentFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
-                    Intent intent = new Intent(context, DetailActivity.class);
-                    intent.putExtra("Receta", receta);
-                    context.startActivity(intent);                }
+                    Intent intent = new Intent(context, PhotoActivity.class);
+                    context.startActivity(intent);
+                }
             });
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

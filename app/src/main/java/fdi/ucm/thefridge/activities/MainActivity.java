@@ -55,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getBaseContext(), "Base de datos preparada", Toast.LENGTH_LONG).show();
         Toast.makeText(getBaseContext(), "Bienvenido, "+SesionUsuario.getId(), Toast.LENGTH_LONG).show();
 
+
+
+        //DBHelper.Usuario usuario=dbHelper.get("usr2");
+
         //Se coloca el viewPager en el valor pasado
         viewPager.setCurrentItem(position);
     }

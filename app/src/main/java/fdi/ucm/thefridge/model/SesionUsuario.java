@@ -5,6 +5,7 @@ package fdi.ucm.thefridge.model;
  */
 public class SesionUsuario {
     private static String id, password;
+    private static int idNum;
     private static boolean logueado;
 
     public static boolean isLogueado() {
@@ -30,5 +31,9 @@ public class SesionUsuario {
 
     public static void setPassword(String password) {
         SesionUsuario.password = password;
+    }
+
+    public static void setIdNum(int idNum) {
+        SesionUsuario.idNum = idNum;
     }
 }

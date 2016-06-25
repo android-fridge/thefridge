@@ -163,7 +163,7 @@ public class RegisterActivity extends AppCompatActivity {
                 showWaitDialog("Registrando...");
 
                 try{
-                    Usuario usuario = new Usuario(username, pass);
+                    Usuario usuario = new Usuario(username, pass,0);
                     dbAccess.open();
                     dbAccess.insert(usuario);
                     closeWaitDialog();

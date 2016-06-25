@@ -20,7 +20,7 @@ public class ListViewIngredientesAdapter extends ArrayAdapter<Ingrediente> {
 
     private LayoutInflater mInflater;
     private Context context;
-    private ArrayList<Ingrediente> ingredientes;
+    private static ArrayList<Ingrediente> ingredientes;
 
 
     public ListViewIngredientesAdapter(Context context, ArrayList<Ingrediente> ingredientes){
@@ -62,4 +62,8 @@ public class ListViewIngredientesAdapter extends ArrayAdapter<Ingrediente> {
         categoria.setText(ingredientes.get(position).getcategoria());
         return convertView;
     }
+    public static ArrayList<Ingrediente> getIngredientes(){
+        return ingredientes;
+    }
+
 }

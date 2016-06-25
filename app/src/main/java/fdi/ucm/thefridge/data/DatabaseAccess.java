@@ -108,6 +108,7 @@ public class DatabaseAccess {
             if(c.getCount()>0){
                 c.moveToFirst();
                 usr=new Usuario();
+               // usr.setIdNum(c.getInt(1));
                 usr.setId(c.getString(0));
                 usr.setPassword(c.getString(1));
             }else

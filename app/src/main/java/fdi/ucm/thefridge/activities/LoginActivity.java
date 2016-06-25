@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (usuario.getId().equals(userId.getText().toString()) && usuario.getPassword().equals(password.getText().toString())){
                         closeWaitDialog();
                         SesionUsuario.setId(usuario.getId());
+                        SesionUsuario.setIdNum(usuario.getIdNum());
                         SesionUsuario.setLogueado(true);
                         showDialogMessage("¡Login ok!", "Bienvenido, "+usuario.getId(), true);
                     }else{

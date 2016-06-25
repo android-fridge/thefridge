@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import fdi.ucm.thefridge.data.DBHelper;
 import fdi.ucm.thefridge.R;
 import fdi.ucm.thefridge.data.DatabaseAccess;
 import fdi.ucm.thefridge.model.SesionUsuario;

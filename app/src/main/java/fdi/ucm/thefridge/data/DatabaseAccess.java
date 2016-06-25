@@ -152,13 +152,15 @@ public class DatabaseAccess {
         return list;
     }
 
-    public ArrayList<String> getPasosReceta(int id) {
-        ArrayList<String> list = new ArrayList<>();
+    public String[] getPasosReceta(int id) {
         Cursor cursor = database.rawQuery("SELECT descripcion FROM receta_pasos WHERE id_receta="+id, null);
+        int i = 0;
+        String[] list = new String[cursor.getCount()];
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             String desc = cursor.getString(0);
-            list.add(desc);
+            list[i] = desc;
+            i++;
             cursor.moveToNext();
         }
         cursor.close();

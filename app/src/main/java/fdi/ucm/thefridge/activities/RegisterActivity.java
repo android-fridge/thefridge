@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import fdi.ucm.thefridge.data.DBHelper;
 import fdi.ucm.thefridge.R;
 import fdi.ucm.thefridge.data.DatabaseAccess;
 import fdi.ucm.thefridge.model.Usuario;

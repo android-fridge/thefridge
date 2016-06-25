@@ -21,6 +21,8 @@
             android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
             app:contentScrim="?attr/colorPrimary"
+            app:collapsedTitleTextAppearance="@style/TextAppearance.MyApp.Title.Collapsed"
+            app:expandedTitleTextAppearance="@style/TextAppearance.MyApp.Title.Expanded"
             app:expandedTitleMarginEnd="@dimen/article_keylines"
             app:expandedTitleMarginStart="@dimen/md_keylines"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -60,64 +62,34 @@
             android:paddingRight="@dimen/md_keylines"
             android:paddingTop="@dimen/md_keylines">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/tiempo_receta"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:textColor="?attr/colorAccent"
-                    android:text=""
-                    android:textSize="@dimen/article_titles"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true" />
-
-                <TextView
-                    android:id="@+id/personas_receta"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:textColor="?attr/colorAccent"
-                    android:text=""
-                    android:textSize="@dimen/article_titles"
-                    android:layout_centerVertical="true"
-                    android:layout_alignLeft="@id/tiempo_receta" />
-
-                <ImageButton
-                    android:id="@+id/imagen_dificultad"
-                    android:layout_width="98px"
-                    android:layout_height="18px"
-                    android:contentDescription=""
-                    android:src="@drawable/ic_dificultad_max"
-                    android:background="#ffffff"
-                    android:clickable="false"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp">
-
-                <TextView
-                    android:id="@+id/pasos"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="?attr/colorAccent"
-                    android:text="Pasos"
-                    android:textSize="@dimen/article_titles"
-                    android:layout_marginBottom="@dimen/md_keylines" />
-
-
-            </RelativeLayout>
-
-
-            <ListView
-                android:id="@+id/pasos_de_receta"
+            <TextView
+                android:id="@+id/tiempo_receta"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="25dp"
+                android:drawableLeft="@drawable/clock"
+                android:textColor="#000000"
+                android:text=""
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/personas_receta"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:drawableLeft="@drawable/users"
+                android:textColor="#000000"
+                android:text=""
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:id="@+id/dificultad_text"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:textColor="#000000"
+                android:text="Dificultad: "
+                android:textSize="16sp"
+                />
 
             <TextView
                 android:id="@+id/ingredientes_receta"
@@ -128,10 +100,36 @@
                 android:textSize="@dimen/article_titles"
                 android:layout_marginBottom="@dimen/md_keylines" />
 
-            <ListView
+            <fdi.ucm.thefridge.model.ExpandableHeightListView
                 android:id="@+id/ingredientes_de_recetas"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:cacheColorHint="#00000000"
+                android:fadingEdge="none"
+                android:focusable="false"
+                android:scrollbars="none"
+                ></fdi.ucm.thefridge.model.ExpandableHeightListView>
+
+            <TextView
+                android:id="@+id/pasos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/colorAccent"
+                android:text="Pasos"
+                android:textSize="@dimen/article_titles"
+                android:layout_marginBottom="@dimen/md_keylines" />
+
+            <fdi.ucm.thefridge.model.ExpandableHeightListView
+                android:id="@+id/pasos_de_receta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cacheColorHint="#00000000"
+                android:fadingEdge="none"
+                android:focusable="false"
+                android:scrollbars="none"
+                ></fdi.ucm.thefridge.model.ExpandableHeightListView>
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
 </android.support.design.widget.CoordinatorLayout>

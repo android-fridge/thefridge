@@ -11,22 +11,33 @@ import java.util.Comparator;
  * Clase de los ingredientes
  */
 public class Ingrediente implements Comparator<Ingrediente>, Parcelable {
+    private int _id;
     private String nombre;
     private String rareza;
     private String categoria; //Las referencias a las imagenes se devuelven como enteros
 
     public Ingrediente() {
     }
-    public Ingrediente(String nombre, String rareza, String categoria){
+    public Ingrediente(int _id, String nombre, String rareza, String categoria){
+        this._id = _id;
         this.nombre = nombre;
         this.rareza = rareza;
         this.categoria = categoria;
     }
 
     public Ingrediente(Parcel in) {
+        this._id = in.readInt();
         this.nombre = in.readString();
         this.rareza = in.readString();
         this.categoria = in.readString();
+    }
+
+    public int getId(){
+        return _id;
+    }
+
+    public void setId(int _id){
+        this._id = _id;
     }
 
     public String getNombre(){
@@ -66,6 +77,7 @@ public class Ingrediente implements Comparator<Ingrediente>, Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(_id);
         dest.writeString(nombre);
         dest.writeString(rareza);
         dest.writeString(categoria);

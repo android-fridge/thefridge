@@ -20,6 +20,10 @@ public class SesionUsuario {
         return id;
     }
 
+    public static int getIdNum() {
+        return idNum;
+    }
+
     public static String getPassword() {
         return password;
     }

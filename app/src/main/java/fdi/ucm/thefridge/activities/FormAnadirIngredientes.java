@@ -26,8 +26,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import fdi.ucm.thefridge.R;
+import fdi.ucm.thefridge.data.DatabaseAccess;
 import fdi.ucm.thefridge.model.Ingrediente;
 import fdi.ucm.thefridge.model.ListViewIngredientesAdapter;
+import fdi.ucm.thefridge.model.SesionUsuario;
 
 /**
  * Created by Michael Tome Rodriguez on 12/05/2016.
@@ -36,6 +38,7 @@ public class FormAnadirIngredientes extends AppCompatActivity{
 
 
     // UI references.
+    private DatabaseAccess dbAccess;
     private TextView mIngredienteView;
     private AutoCompleteTextView ingredienteBuscado;
     private ArrayList<Ingrediente> buscados;
@@ -51,6 +54,7 @@ public class FormAnadirIngredientes extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_anadir_ingredientes);
 
+        dbAccess=DatabaseAccess.getInstance(this);
         neveraInterna = new ArrayList<>();
         ingredientesDB = new ArrayList<>();
         Bundle extras = getIntent().getExtras();
@@ -161,7 +165,8 @@ public class FormAnadirIngredientes extends AppCompatActivity{
                 {
                     escritor=new OutputStreamWriter(openFileOutput("intern_fridge.txt", Context.MODE_PRIVATE));
                     for(int i = 0; i < buscados.size(); i++) {
-                        escritor.write(neveraInterna.get(i).getNombre() + "," + neveraInterna.get(i).getRareza() + "," + neveraInterna.get(i).getcategoria() + "\n");
+                        escritor.write(neveraInterna.get(i).getId() + "," + neveraInterna.get(i).getNombre() + "," + neveraInterna.get(i).getRareza() + "," + neveraInterna.get(i).getcategoria() + "\n");
+                        dbAccess.insertNevera(SesionUsuario.getIdNum(), neveraInterna.get(i).getId());
                     }
                     escritor.flush();
                     escritor.close();

@@ -15,11 +15,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fdi.ucm.thefridge.R;
 import fdi.ucm.thefridge.data.DatabaseAccess;
+import fdi.ucm.thefridge.model.AeSimpleSHA1;
 import fdi.ucm.thefridge.model.Usuario;
 
 /**
@@ -36,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
     private AlertDialog userDialog;
     private String username, pass;
     private DatabaseAccess dbAccess;
+    private AeSimpleSHA1 hashClass;
 
     /* */
     private static final String PASSWORD_PATTERN="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})";
@@ -45,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         dbAccess=DatabaseAccess.getInstance(this);
         setContentView(R.layout.activity_register);
         pattern=Pattern.compile(PASSWORD_PATTERN);
+        hashClass = new AeSimpleSHA1();
         pass1Ok=false;
         pass2Ok=false;
         button=(Button) findViewById(R.id.button_register);
@@ -163,12 +168,14 @@ public class RegisterActivity extends AppCompatActivity {
                 showWaitDialog("Registrando...");
 
                 try{
-                    Usuario usuario = new Usuario(username, pass,0);
+                    String hashedPass = hashClass.sha1Hash(pass);
+                    Usuario usuario = new Usuario(username, hashedPass,0);
                     dbAccess.open();
                     dbAccess.insert(usuario);
                     closeWaitDialog();
                     dbAccess.close();
-                    showDialogMessage("¡Registro completado!", "Bienvenido, "+username, true);
+                    exit(username,pass);
+                    //showDialogMessage("¡Registro completado!", "Bienvenido, "+usuario.getId(), true);
                 }catch(SQLiteConstraintException e){
                     closeWaitDialog();
                     Log.d("Error DB", "Error de insercion insercion");
@@ -189,11 +196,11 @@ public class RegisterActivity extends AppCompatActivity {
                 try {
                     userDialog.dismiss();
                     if(exit) {
-                        exit(username);
+                        exit(username,"");
                     }
                 } catch (Exception e) {
                     if(exit) {
-                        exit(username);
+                        exit(username,"");
                     }
                 }
             }
@@ -219,13 +226,15 @@ public class RegisterActivity extends AppCompatActivity {
         waitDialog.setTitle(message);
         waitDialog.show();
     }
-    private void exit(String uname) {
-        Intent intent = new Intent();
+    private void exit(String uname,String pass) {
+        Intent intent = new Intent(this, LoginActivity.class);
         if(uname == null)
             uname = "";
         intent.putExtra("name",uname);
+        intent.putExtra("pass",pass);
         setResult(RESULT_OK, intent);
         finish();
+        startActivity(intent);
     }
 
 

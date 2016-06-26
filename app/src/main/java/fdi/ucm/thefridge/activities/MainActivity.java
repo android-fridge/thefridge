@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager=(ViewPager) findViewById(R.id.viewpager);
         MyAdapter adapter = new MyAdapter(getSupportFragmentManager());
         adapter.addFragment(new OneclicContentFragment(), "OneClick");
-        adapter.addFragment(new RecetasContentFragment(), "Receta");
+        adapter.addFragment(new RecetasContentFragment(), "Recetas");
         adapter.addFragment(new IngredientesContentFragment(), "Nevera");
         adapter.addFragment(new TimelineContentFragment(), "Timeline");
         viewPager.setAdapter(adapter);
@@ -54,10 +54,7 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabs= (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
-        Toast.makeText(getBaseContext(), "Base de datos preparada", Toast.LENGTH_LONG).show();
         Toast.makeText(getBaseContext(), "Bienvenido, "+SesionUsuario.getId(), Toast.LENGTH_LONG).show();
-
-        //DBHelper.Usuario usuario=dbHelper.get("usr2");
 
         //Se coloca el viewPager en el valor pasado
         viewPager.setCurrentItem(position);

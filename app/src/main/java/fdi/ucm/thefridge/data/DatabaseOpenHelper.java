@@ -1,7 +1,6 @@
 package fdi.ucm.thefridge.data;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 /**

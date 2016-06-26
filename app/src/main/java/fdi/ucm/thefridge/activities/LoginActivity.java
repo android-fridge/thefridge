@@ -13,6 +13,7 @@ import android.widget.EditText;
 
 import fdi.ucm.thefridge.R;
 import fdi.ucm.thefridge.data.DatabaseAccess;
+import fdi.ucm.thefridge.model.AeSimpleSHA1;
 import fdi.ucm.thefridge.model.SesionUsuario;
 import fdi.ucm.thefridge.model.Usuario;
 
@@ -26,16 +27,26 @@ public class LoginActivity extends AppCompatActivity {
     private Usuario usuario;
     private AlertDialog userDialog;
     private ProgressDialog waitDialog;
+    private AeSimpleSHA1 hashClass;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         buttonLogin=(Button) findViewById(R.id.button_login);
         buttonRegister=(Button) findViewById(R.id.button_acceso_registro);
         dbAccess=DatabaseAccess.getInstance(this);
-
+        hashClass = new AeSimpleSHA1();
         userId=(EditText)findViewById(R.id.usuarioLogin);
         password=(EditText)findViewById(R.id.passwordLogin);
+
+        String userReg;
+        String passReg;
+        if((userReg = getIntent().getStringExtra("name")) != null && (passReg= getIntent().getStringExtra("pass")) != null){
+            userId.setText(userReg);
+            password.setText(passReg);
+        }
+
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,17 +56,19 @@ public class LoginActivity extends AppCompatActivity {
                 if (usuario==null){
                     closeWaitDialog();
                     showDialogMessage("¡Error!", "Usuario o contraseña incorrectos, ", false);
-                }else
-                    if (usuario.getId().equals(userId.getText().toString()) && usuario.getPassword().equals(password.getText().toString())){
+                }else {
+                    String hash = hashClass.sha1Hash(password.getText().toString());
+                    if (usuario.getId().equals(userId.getText().toString()) && usuario.getPassword().equals(hash)) {
                         closeWaitDialog();
                         SesionUsuario.setId(usuario.getId());
                         SesionUsuario.setIdNum(usuario.getIdNum());
                         SesionUsuario.setLogueado(true);
-                        showDialogMessage("¡Login ok!", "Bienvenido, "+usuario.getId(), true);
-                    }else{
+                        exit(usuario.getId());
+                    } else {
                         closeWaitDialog();
                         showDialogMessage("¡Error!", "Usuario o contraseña incorrectos, ", false);
                     }
+                }
                 dbAccess.close();
             }
         });

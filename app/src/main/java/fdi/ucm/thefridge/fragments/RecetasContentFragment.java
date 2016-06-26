@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +40,10 @@ import fdi.ucm.thefridge.model.Receta;
 public class RecetasContentFragment extends Fragment implements AdapterView.OnItemSelectedListener,SearchView.OnQueryTextListener {
     private int CODIGO_ACTIVIDAD = 2;
     private List<Receta> mModels;
+    private DatabaseAccess db;
     ContentAdapter mAdapter;
     RecyclerView mRecyclerView;
+    boolean firstLoad = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,7 +51,7 @@ public class RecetasContentFragment extends Fragment implements AdapterView.OnIt
         View rootView = inflater.inflate(R.layout.recycler_view, container, false);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
         Context c = getContext();
-        DatabaseAccess db = DatabaseAccess.getInstance(c);
+        db = DatabaseAccess.getInstance(c);
         db.open();
         mModels = db.getRecetas();
         db.close();
@@ -61,11 +66,11 @@ public class RecetasContentFragment extends Fragment implements AdapterView.OnIt
         Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(this);
 
-        List<String> categories = new ArrayList<String>();
+        List<String> categories = new ArrayList<>();
         categories.add("Todas las recetas");
         categories.add("Mi nevera");
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(c, android.R.layout.simple_spinner_item, categories);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(c, android.R.layout.simple_spinner_item, categories);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
 
@@ -79,7 +84,6 @@ public class RecetasContentFragment extends Fragment implements AdapterView.OnIt
     public boolean onQueryTextChange(String query) {
         final List<Receta> filteredModelList = filter(mModels, query);
         mAdapter.setModels(filteredModelList);
-        //mAdapter.animateTo(filteredModelList);
         mAdapter.notifyDataSetChanged();
         mRecyclerView.scrollToPosition(0);
         return true;
@@ -107,12 +111,59 @@ public class RecetasContentFragment extends Fragment implements AdapterView.OnIt
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
         String item = parent.getItemAtPosition(position).toString();
+        if(firstLoad)
+            firstLoad = false;
+        else{
+            if(position == 0){
+                mAdapter.setModels(mModels);
+                mAdapter.notifyDataSetChanged();
+                mRecyclerView.scrollToPosition(0);
+            }else if(position == 1){
+                List<Receta> recetasParaNevera = getRecetasParaNevera();
+                mAdapter.setModels(recetasParaNevera);
+                mAdapter.notifyDataSetChanged();
+                mRecyclerView.scrollToPosition(0);
+            }
+        }
 
         // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+        //Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
+    }
+
+    public ArrayList<Ingrediente> getIngredientesFromFile(){
+        ArrayList<Ingrediente> listaIngrediente = new ArrayList<>();
+        try
+        {
+            InputStreamReader arch = new InputStreamReader(getActivity().openFileInput("intern_fridge.txt"));
+            BufferedReader fin = new BufferedReader(arch);
+
+            String line;
+            while ((line = fin.readLine()) != null){
+
+                String[] div = line.split(",");
+                Ingrediente in = new Ingrediente(div[0], div[1], div[2].substring(0,1));
+                listaIngrediente.add(in);
+            }
+            fin.close();
+            arch.close();
+        }
+        catch (Exception ex)
+        {
+            Log.e("Ficheros", "Error al leer fichero desde memoria interna");
+        }
+
+        return listaIngrediente;
+    }
+
+    private List<Receta> getRecetasParaNevera(){
+        /*
+        //ArrayList<Ingrediente> ingredientesNevera = db.getIngredientesNevera();
+        //List<Receta> recetasNevera = db.getRecetasNevera(ingredientesNevera);
+        //return recetasNevera;
+        */return null;
     }
 
     public static class RecetaViewHolder extends RecyclerView.ViewHolder {

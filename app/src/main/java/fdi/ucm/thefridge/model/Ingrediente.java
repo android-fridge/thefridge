@@ -14,7 +14,7 @@ public class Ingrediente implements Comparator<Ingrediente>, Parcelable {
     private int _id;
     private String nombre;
     private String rareza;
-    private String categoria; //Las referencias a las imagenes se devuelven como enteros
+    private String categoria;
 
     public Ingrediente() {
     }

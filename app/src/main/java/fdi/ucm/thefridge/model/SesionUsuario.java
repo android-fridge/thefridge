@@ -4,7 +4,7 @@ package fdi.ucm.thefridge.model;
  * Created by Carlos Casado González on 20/05/2016.
  */
 public class SesionUsuario {
-    private static String id, password;
+    private static String id;
     private static int idNum;
     private static boolean logueado;
 
@@ -24,17 +24,9 @@ public class SesionUsuario {
         return idNum;
     }
 
-    public static String getPassword() {
-        return password;
-    }
-
     public static void setId(String id) {
 
         SesionUsuario.id = id;
-    }
-
-    public static void setPassword(String password) {
-        SesionUsuario.password = password;
     }
 
     public static void setIdNum(int idNum) {

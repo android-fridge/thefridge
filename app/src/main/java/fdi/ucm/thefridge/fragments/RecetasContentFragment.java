@@ -133,37 +133,12 @@ public class RecetasContentFragment extends Fragment implements AdapterView.OnIt
         // TODO Auto-generated method stub
     }
 
-    public ArrayList<Ingrediente> getIngredientesFromFile(){
-        ArrayList<Ingrediente> listaIngrediente = new ArrayList<>();
-        try
-        {
-            InputStreamReader arch = new InputStreamReader(getActivity().openFileInput("intern_fridge.txt"));
-            BufferedReader fin = new BufferedReader(arch);
-
-            String line;
-            while ((line = fin.readLine()) != null){
-
-                String[] div = line.split(",");
-                Ingrediente in = new Ingrediente(div[0], div[1], div[2].substring(0,1));
-                listaIngrediente.add(in);
-            }
-            fin.close();
-            arch.close();
-        }
-        catch (Exception ex)
-        {
-            Log.e("Ficheros", "Error al leer fichero desde memoria interna");
-        }
-
-        return listaIngrediente;
-    }
-
     private List<Receta> getRecetasParaNevera(){
-        /*
-        //ArrayList<Ingrediente> ingredientesNevera = db.getIngredientesNevera();
-        //List<Receta> recetasNevera = db.getRecetasNevera(ingredientesNevera);
-        //return recetasNevera;
-        */return null;
+        List<Receta> r;
+        db.open();
+        r = db.getRecetasNevera();
+        db.close();
+        return r;
     }
 
     public static class RecetaViewHolder extends RecyclerView.ViewHolder {

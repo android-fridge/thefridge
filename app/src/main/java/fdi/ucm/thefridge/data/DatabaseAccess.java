@@ -19,6 +19,7 @@ import java.util.Locale;
 import fdi.ucm.thefridge.model.Publicacion;
 import fdi.ucm.thefridge.model.Receta;
 import fdi.ucm.thefridge.model.Ingrediente;
+import fdi.ucm.thefridge.model.SesionUsuario;
 import fdi.ucm.thefridge.model.Usuario;
 
 /**
@@ -69,7 +70,7 @@ public class DatabaseAccess {
     }
 
     /**
-     * Read all recetas from the database.
+     * Devuelve todas las recetas de la base de datos.
      *
      * @return a List of quotes
      */
@@ -88,7 +89,29 @@ public class DatabaseAccess {
     }
 
     /**
-     * Read all recetas from the database.
+     * Devuelve las recetas que contienen los ingredientes de la nevera de un usuario.
+     *
+     * @return a List of quotes
+     */
+    public List<Receta> getRecetasNevera() {
+        int id_user = SesionUsuario.getIdNum();
+        List<Receta> list = new ArrayList<>();//
+        Cursor cursor = database.rawQuery("SELECT DISTINCT r.* FROM recetas AS r" +
+                ",receta_ingredientes AS ri WHERE r._id=ri.id_receta AND ri.id_ingrediente IN" +
+                "(SELECT id_ingrediente FROM nevera WHERE id_usuario="+id_user+") ORDER BY r.nombre", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Receta r = new Receta(cursor.getInt(0),cursor.getString(1),cursor.getString(2)
+                    ,cursor.getString(3),cursor.getString(4));
+            list.add(r);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return list;
+    }
+
+    /**
+     * Devuelve todas los ingredientes de la base de datos.
      *
      * @return a List of ingredientes
      */
@@ -229,4 +252,6 @@ public class DatabaseAccess {
         cursor.close();
         return list;
     }
+
+
 }

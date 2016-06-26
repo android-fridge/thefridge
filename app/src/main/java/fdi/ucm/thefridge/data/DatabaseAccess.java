@@ -7,8 +7,16 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import fdi.ucm.thefridge.model.Publicacion;
 import fdi.ucm.thefridge.model.Receta;
 import fdi.ucm.thefridge.model.Ingrediente;
 import fdi.ucm.thefridge.model.Usuario;
@@ -131,12 +139,50 @@ public class DatabaseAccess {
         database.insertOrThrow("usuarios",null,values);
 
     }
+    public void insertPublicacion (Publicacion publicacion)throws SQLiteConstraintException {
+        ContentValues values=new ContentValues();
+        values.put("usuario", publicacion.getUsuario());
+        values.put("mensaje", publicacion.getMensaje());
+        values.put("img", publicacion.getImg());
+        values.put("fecha", getDateTime());
+        /*Lanza excepcion si hay error en insercion*/
+        database.insertOrThrow("publicaciones",null,values);
+
+    }
+    private String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
 
     public void update (Usuario usr){
         ContentValues values=new ContentValues();
         values.put("nombre", usr.getId());
         values.put("password", usr.getPassword());
         database.update("usuarios",values,"nombre="+usr.getId(),null);
+    }
+    public ArrayList<Publicacion> getPublicaciones(int numFilas){
+        ArrayList<Publicacion> list=new ArrayList<>();
+        Cursor cursor=database.rawQuery("select usuario, mensaje, fecha, img from publicaciones order by fecha desc limit "+numFilas, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            String usr = cursor.getString(0);
+            String msj=cursor.getString(1);
+            String fecha=cursor.getString(2);
+            DateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date= null;
+            try {
+                date = formatter.parse(fecha);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            String img=cursor.getString(3);
+            list.add(new Publicacion(0,usr,msj,date,img));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return list;
     }
 
     public ArrayList<String> GetlistIngredientesReceta(int id) {

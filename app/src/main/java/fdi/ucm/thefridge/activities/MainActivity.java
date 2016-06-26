@@ -18,10 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fdi.ucm.thefridge.R;
+import fdi.ucm.thefridge.data.DatabaseAccess;
 import fdi.ucm.thefridge.fragments.IngredientesContentFragment;
 import fdi.ucm.thefridge.fragments.OneclicContentFragment;
 import fdi.ucm.thefridge.fragments.RecetasContentFragment;
 import fdi.ucm.thefridge.fragments.TimelineContentFragment;
+import fdi.ucm.thefridge.model.Publicacion;
 import fdi.ucm.thefridge.model.SesionUsuario;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
         Toast.makeText(getBaseContext(), "Base de datos preparada", Toast.LENGTH_LONG).show();
         Toast.makeText(getBaseContext(), "Bienvenido, "+SesionUsuario.getId(), Toast.LENGTH_LONG).show();
-
-
 
         //DBHelper.Usuario usuario=dbHelper.get("usr2");
 

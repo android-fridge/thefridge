@@ -97,10 +97,11 @@ public class DatabaseAccess {
         Cursor cursor = database.rawQuery("SELECT * FROM ingredientes", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
+            int id = cursor.getInt(0);
             String nombre = cursor.getString(1);
             String categoria = cursor.getString(2);
             String rareza = cursor.getString(3).substring(0,1).toUpperCase();
-            Ingrediente ing = new Ingrediente(nombre, rareza, categoria);
+            Ingrediente ing = new Ingrediente(id, nombre, rareza, categoria);
             list.add(ing);
             cursor.moveToNext();
         }
@@ -197,6 +198,21 @@ public class DatabaseAccess {
         }
         cursor.close();
         return list;
+    }
+
+    /**
+     * insert en la nevera para conseguir los ingredientes en la nevera del usuario
+     * @param user id del usuario
+     * @param ingrediente id del ingrediente
+     * @throws SQLiteConstraintException
+     */
+    public void insertNevera (int user, int ingrediente)throws SQLiteConstraintException {
+        ContentValues values=new ContentValues();
+        values.put("id_usuario", user);
+        values.put("id_ingrediente", ingrediente);
+        /*Lanza excepcion si hay error en insercion*/
+        database.insertOrThrow("nevera",null,values);
+
     }
 
     public String[] getPasosReceta(int id) {

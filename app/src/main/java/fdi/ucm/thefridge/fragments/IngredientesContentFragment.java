@@ -23,6 +23,7 @@ import fdi.ucm.thefridge.activities.FormAnadirIngredientes;
 import fdi.ucm.thefridge.data.DatabaseAccess;
 import fdi.ucm.thefridge.model.Ingrediente;
 import fdi.ucm.thefridge.model.ListViewIngredientesAdapter;
+import fdi.ucm.thefridge.model.SesionUsuario;
 
 /**
  * Created by Carlos Casado González on 02/05/2016.
@@ -41,9 +42,11 @@ public class IngredientesContentFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         dbAccess=DatabaseAccess.getInstance(this.getContext());
+
         rootView = inflater.inflate(R.layout.list_ingrediente, container, false);
         listIngredientes = GetlistIngredientes();
         listIngredientesDB = GetlistIngredientesDB();
+
         lv = (ListView)rootView.findViewById(R.id.list_ingredientes);
         adapter = new ListViewIngredientesAdapter(getActivity(), listIngredientes);
         lv.setAdapter(adapter);
@@ -76,7 +79,8 @@ public class IngredientesContentFragment extends Fragment{
             {
                 escritor=new OutputStreamWriter(getActivity().openFileOutput("intern_fridge.txt", Context.MODE_PRIVATE));
                 for(int i = 0; i < listIngredientes.size(); i++) {
-                    escritor.write(listIngredientes.get(i).getNombre() + "," + listIngredientes.get(i).getRareza() + "," + listIngredientes.get(i).getcategoria() + "\n");
+                    escritor.write(listIngredientes.get(i).getId() + "," + listIngredientes.get(i).getNombre() + "," + listIngredientes.get(i).getRareza() + "," + listIngredientes.get(i).getcategoria() + "\n");
+                    dbAccess.insertNevera(SesionUsuario.getIdNum(), listIngredientes.get(i).getId());
                 }
                 escritor.flush();
                 escritor.close();
@@ -111,7 +115,7 @@ public class IngredientesContentFragment extends Fragment{
             while ((line = fin.readLine()) != null){
 
                 String[] div = line.split(",");
-                Ingrediente in = new Ingrediente(div[0], div[1], div[2].substring(0,1));
+                Ingrediente in = new Ingrediente(Integer.parseInt(div[0]), div[1], div[2], div[3].substring(0,1));
                 listaIngrediente.add(in);
             }
             fin.close();

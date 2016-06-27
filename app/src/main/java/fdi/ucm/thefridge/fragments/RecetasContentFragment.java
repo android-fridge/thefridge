@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Filterable;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -145,6 +146,7 @@ public class RecetasContentFragment extends Fragment implements AdapterView.OnIt
 
         public TextView nombreTextView;
         public Button details;
+        public ImageView imagenReceta;
         public ImageButton share;
 
         public RecetaViewHolder(View itemView) {
@@ -152,7 +154,7 @@ public class RecetasContentFragment extends Fragment implements AdapterView.OnIt
             nombreTextView = (TextView) itemView.findViewById(R.id.card_text);
             details = (Button) itemView.findViewById(R.id.action_button);
             share = (ImageButton) itemView.findViewById(R.id.share_button);
-
+            imagenReceta = (ImageView) itemView.findViewById(R.id.card_image);
         }
 
     }
@@ -182,6 +184,7 @@ public class RecetasContentFragment extends Fragment implements AdapterView.OnIt
         @Override
         public void onBindViewHolder(RecetaViewHolder holder, int position) {
             final Receta receta = recetas.get(position);
+
             holder.nombreTextView.setText(receta.getNombre());
             holder.details.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -210,6 +213,12 @@ public class RecetasContentFragment extends Fragment implements AdapterView.OnIt
                     context.startActivity(intent);
                 }
             });
+
+            String imagename = receta.getImagen();
+            if(imagename != null){
+                int res = context.getResources().getIdentifier(imagename, "drawable", context.getPackageName());
+                holder.imagenReceta.setImageResource(res);
+            }
         }
 
         @Override

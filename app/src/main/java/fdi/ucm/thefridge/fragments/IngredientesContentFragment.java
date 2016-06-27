@@ -44,7 +44,7 @@ public class IngredientesContentFragment extends Fragment{
         dbAccess=DatabaseAccess.getInstance(this.getContext());
 
         rootView = inflater.inflate(R.layout.list_ingrediente, container, false);
-        listIngredientes = GetlistIngredientes();
+        listIngredientes = getIngredienetsNeveraDB();
         listIngredientesDB = GetlistIngredientesDB();
 
         lv = (ListView)rootView.findViewById(R.id.list_ingredientes);
@@ -78,10 +78,12 @@ public class IngredientesContentFragment extends Fragment{
             try
             {
                 escritor=new OutputStreamWriter(getActivity().openFileOutput("intern_fridge.txt", Context.MODE_PRIVATE));
+                dbAccess.open();
                 for(int i = 0; i < listIngredientes.size(); i++) {
                     escritor.write(listIngredientes.get(i).getId() + "," + listIngredientes.get(i).getNombre() + "," + listIngredientes.get(i).getRareza() + "," + listIngredientes.get(i).getcategoria() + "\n");
                     dbAccess.insertNevera(SesionUsuario.getIdNum(), listIngredientes.get(i).getId());
                 }
+                dbAccess.close();
                 escritor.flush();
                 escritor.close();
             }
@@ -129,6 +131,13 @@ public class IngredientesContentFragment extends Fragment{
         return listaIngrediente;
     }
 
+    private ArrayList<Ingrediente> getIngredienetsNeveraDB(){
+        ArrayList<Ingrediente> listaIngredienteDB;
+        dbAccess.open();
+        listaIngredienteDB = dbAccess.getIngredientesNevera();
+        dbAccess.close();
+        return listaIngredienteDB;
+    }
     /**
      * Metodo para añadir datos a la lista desde la BD
      * @return arrayList con los datos de la BD

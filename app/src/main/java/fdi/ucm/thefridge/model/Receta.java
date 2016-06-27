@@ -11,9 +11,10 @@ public class Receta implements Serializable{
     String dificultad;
     String duracion;
     String personas;
+    String imagen;
     int _id;
 
-    public Receta(int _id, String nombre, String dificultad, String duracion, String personas) {
+    public Receta(int _id, String nombre, String dificultad, String duracion, String personas,String imagen) {
         this.nombre = nombre;
         this.dificultad = dificultad;
         this.duracion = duracion;
@@ -35,5 +36,12 @@ public class Receta implements Serializable{
     public void setDuracion(String duracion) {this.duracion = duracion;}
     public int get_id() {return _id;}
     public void set_id(int _id) {this._id = _id;}
+    public String getImagen() {
+        return imagen;
+    }
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
 
 }

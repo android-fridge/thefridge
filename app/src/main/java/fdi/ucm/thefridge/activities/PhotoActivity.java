@@ -54,6 +54,7 @@ public class PhotoActivity extends AppCompatActivity{
                 startActivityForResult(cameraIntent,0);
                 db.open();
                 db.insertPublicacion(new Publicacion(0,SesionUsuario.getId(),textoFoto.getText().toString(),null,file));
+                db.close();
             }
         });
         buttonAtras.setOnClickListener(new View.OnClickListener() {

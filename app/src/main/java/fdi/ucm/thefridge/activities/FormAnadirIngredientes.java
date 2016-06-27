@@ -164,10 +164,12 @@ public class FormAnadirIngredientes extends AppCompatActivity{
                 try
                 {
                     escritor=new OutputStreamWriter(openFileOutput("intern_fridge.txt", Context.MODE_PRIVATE));
+                    dbAccess.open();
                     for(int i = 0; i < buscados.size(); i++) {
                         escritor.write(neveraInterna.get(i).getId() + "," + neveraInterna.get(i).getNombre() + "," + neveraInterna.get(i).getRareza() + "," + neveraInterna.get(i).getcategoria() + "\n");
                         dbAccess.insertNevera(SesionUsuario.getIdNum(), neveraInterna.get(i).getId());
                     }
+                    dbAccess.close();
                     escritor.flush();
                     escritor.close();
                 }

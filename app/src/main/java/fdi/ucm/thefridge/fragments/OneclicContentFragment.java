@@ -33,7 +33,7 @@ public class OneclicContentFragment extends Fragment implements SwipeRefreshLayo
         DatabaseAccess db = DatabaseAccess.getInstance(c);
         db.open();
         recetas = db.getRecetas();
-
+        db.close();
 
         return rootView;
     }

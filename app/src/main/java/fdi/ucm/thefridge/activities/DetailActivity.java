@@ -56,7 +56,7 @@ public class DetailActivity extends AppCompatActivity {
         lving.setAdapter(adaptador_ingredientes);
         lving.setExpanded(true);
         lvrecetas = (ExpandableHeightListView) findViewById(R.id.pasos_de_receta);
-        adaptador_pasos = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, pasosReceta);
+        adaptador_pasos = new ArrayAdapter<String>(this,R.layout.item_listview, pasosReceta);
         lvrecetas.setAdapter(adaptador_pasos);
         lvrecetas.setExpanded(true);
 

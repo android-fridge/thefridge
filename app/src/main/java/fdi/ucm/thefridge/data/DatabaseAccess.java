@@ -79,8 +79,9 @@ public class DatabaseAccess {
         Cursor cursor = database.rawQuery("SELECT * FROM recetas ORDER BY nombre", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
+            String imagen = cursor.getString(5);
             Receta r = new Receta(cursor.getInt(0),cursor.getString(1),cursor.getString(2)
-                    ,cursor.getString(3),cursor.getString(4));
+                    ,cursor.getString(3),cursor.getString(4), imagen);
             list.add(r);
             cursor.moveToNext();
         }
@@ -101,8 +102,9 @@ public class DatabaseAccess {
                 "(SELECT id_ingrediente FROM nevera WHERE id_usuario="+id_user+") ORDER BY r.nombre", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
+            String imagen = cursor.getString(5);
             Receta r = new Receta(cursor.getInt(0),cursor.getString(1),cursor.getString(2)
-                    ,cursor.getString(3),cursor.getString(4));
+                    ,cursor.getString(3),cursor.getString(4),imagen);
             list.add(r);
             cursor.moveToNext();
         }
@@ -118,6 +120,30 @@ public class DatabaseAccess {
     public ArrayList<Ingrediente> getIngredientes() {
         ArrayList<Ingrediente> list = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT * FROM ingredientes", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            int id = cursor.getInt(0);
+            String nombre = cursor.getString(1);
+            String categoria = cursor.getString(2);
+            String rareza = cursor.getString(3).substring(0,1).toUpperCase();
+            Ingrediente ing = new Ingrediente(id, nombre, rareza, categoria);
+            list.add(ing);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return list;
+    }
+
+    /**
+     * Devuelve todas los ingredientes de la base de datos.
+     *
+     * @return a List of ingredientes
+     */
+    public ArrayList<Ingrediente> getIngredientesNevera() {
+        int id_user = SesionUsuario.getIdNum();
+        ArrayList<Ingrediente> list = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT I.* FROM ingredientes AS i, nevera AS n " +
+                "WHERE i._id=n.id_ingrediente AND n.id_usuario="+id_user, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             int id = cursor.getInt(0);

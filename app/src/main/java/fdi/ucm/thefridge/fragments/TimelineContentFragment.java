@@ -31,8 +31,8 @@ public class TimelineContentFragment extends Fragment{
         Context context=getContext();
         DatabaseAccess db = DatabaseAccess.getInstance(context);
         db.open();
-
         ArrayList<Publicacion> listaPublic=db.getPublicaciones(numPublic);
+        db.close();
         browser=(WebView) rootView.findViewById(R.id.webViewTimeline);
         browser.loadUrl("file:///android_asset/www/timeline.html");
 

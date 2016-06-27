@@ -124,8 +124,8 @@ public class DatabaseAccess {
         while (!cursor.isAfterLast()) {
             int id = cursor.getInt(0);
             String nombre = cursor.getString(1);
-            String categoria = cursor.getString(2);
-            String rareza = cursor.getString(3).substring(0,1).toUpperCase();
+            String categoria = nombre.substring(0,1).toUpperCase();
+            String rareza = cursor.getString(3);
             Ingrediente ing = new Ingrediente(id, nombre, rareza, categoria);
             list.add(ing);
             cursor.moveToNext();
@@ -148,8 +148,8 @@ public class DatabaseAccess {
         while (!cursor.isAfterLast()) {
             int id = cursor.getInt(0);
             String nombre = cursor.getString(1);
-            String categoria = cursor.getString(2);
-            String rareza = cursor.getString(3).substring(0,1).toUpperCase();
+            String categoria = nombre.substring(0,1).toUpperCase();
+            String rareza = cursor.getString(3);
             Ingrediente ing = new Ingrediente(id, nombre, rareza, categoria);
             list.add(ing);
             cursor.moveToNext();

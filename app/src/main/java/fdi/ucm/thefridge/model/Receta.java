@@ -20,6 +20,7 @@ public class Receta implements Serializable{
         this.duracion = duracion;
         this.personas = personas;
         this._id = _id;
+        this.imagen = imagen;
     }
 
     public String getNombre() {

@@ -142,7 +142,7 @@ public class DatabaseAccess {
     public ArrayList<Ingrediente> getIngredientesNevera() {
         int id_user = SesionUsuario.getIdNum();
         ArrayList<Ingrediente> list = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT I.* FROM ingredientes AS i, nevera AS n " +
+        Cursor cursor = database.rawQuery("SELECT DISTINCT I.* FROM ingredientes AS i, nevera AS n " +
                 "WHERE i._id=n.id_ingrediente AND n.id_usuario="+id_user, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {

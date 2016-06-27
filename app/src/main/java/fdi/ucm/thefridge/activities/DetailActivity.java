@@ -11,6 +11,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -37,6 +38,7 @@ public class DetailActivity extends AppCompatActivity {
     TextView horas;
     TextView personas;
     TextView dificultadText;
+    ImageView imagenReceta;
 
 
     @Override
@@ -83,6 +85,14 @@ public class DetailActivity extends AppCompatActivity {
         personas = (TextView) findViewById(R.id.personas_receta);
         horas.setText(" "+receta.getDuracion());
         personas.setText(" "+receta.getPersonas());
+
+        imagenReceta = (ImageView) findViewById(R.id.image);
+        String imagename = receta.getImagen();
+        if(imagename != null){
+            int res = getResources().getIdentifier(imagename, "drawable", getPackageName());
+            imagenReceta.setImageResource(res);
+        }
+
         // Set Collapsing Toolbar layout to the screen
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -58,6 +59,50 @@ public class TimelineContentFragment extends Fragment{
                     "            </div>" +
                     "        </div>");
         }
+        htmlData.append(" <div class=\"contenedorCard\">" +
+                "            <div class=\"msg\">" +
+                "                <img class=\"img\" src=\"file:///android_res/drawable/alboronia.png\">" +
+                "                <div class=\"descripcion\">Oh, estaba todo muy bueno ñam ñam</div>" +
+                "            </div>" +
+                "            <div class=\"separator\"></div>" +
+                "            <div class=\"msgInfo\">" +
+                "                <div class=\"id_usr\">tyrion</div> " +
+                "                <div class=\"fecha\">Sun Jun 26 21:34:48 CEST 2016</div>" +
+                "            </div>" +
+                "        </div>");
+        htmlData.append(" <div class=\"contenedorCard\">" +
+                "            <div class=\"msg\">" +
+                "                <img class=\"img\" src=\"file:///android_res/drawable/bacalaoalomio.png\">" +
+                "                <div class=\"descripcion\">Oh, estaba todo muy bueno ñam ñam</div>" +
+                "            </div>" +
+                "            <div class=\"separator\"></div>" +
+                "            <div class=\"msgInfo\">" +
+                "                <div class=\"id_usr\">daenerys</div> " +
+                "                <div class=\"fecha\">Sun Jun 26 21:34:49 CEST 2016</div>" +
+                "            </div>" +
+                "        </div>");
+        htmlData.append(" <div class=\"contenedorCard\">" +
+                "            <div class=\"msg\">" +
+                "                <img class=\"img\" src=\"file:///android_res/drawable/alcachofasrellenas.png\">" +
+                "                <div class=\"descripcion\">Oh, estaba todo muy bueno ñam ñam. En serio muy bueno</div>" +
+                "            </div>" +
+                "            <div class=\"separator\"></div>" +
+                "            <div class=\"msgInfo\">" +
+                "                <div class=\"id_usr\">arya</div> " +
+                "                <div class=\"fecha\">Sun Jun 26 21:34:50 CEST 2016</div>" +
+                "            </div>" +
+                "        </div>");
+        htmlData.append(" <div class=\"contenedorCard\">" +
+                "            <div class=\"msg\">" +
+                "                <img class=\"img\" src=\"file:///android_res/drawable/bechamel.png\">" +
+                "                <div class=\"descripcion\">Madre mía cómo me he puesto. Ojo cuidao.</div>" +
+                "            </div>" +
+                "            <div class=\"separator\"></div>" +
+                "            <div class=\"msgInfo\">" +
+                "                <div class=\"id_usr\">john</div> " +
+                "                <div class=\"fecha\">Sun Jun 26 21:34:51 CEST 2016</div>" +
+                "            </div>" +
+                "        </div>");
         htmlData.append("   " +
                 "    </body>" +
                 "</html>");

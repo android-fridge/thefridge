@@ -109,10 +109,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
             startActivity(intent);
         }
-            //context.startActivity(intent);
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }

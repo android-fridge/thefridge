@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -35,13 +36,16 @@ public class OneclicContentFragment extends Fragment{
     private Receta receta;
     private Button detail;
     private ImageButton share;
+    private Context c;
+    private ImageView imagenReceta;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.item_oneclic2, container, false);
         refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container_oneclic);
-        Context c = getContext();
+        c = getContext();
         DatabaseAccess db = DatabaseAccess.getInstance(c);
         db.open();
         recetas = db.getRecetasNevera();
@@ -49,6 +53,13 @@ public class OneclicContentFragment extends Fragment{
         receta=recetas.get(randomize(recetas.size()-1));
         nomb = (TextView) rootView.findViewById(R.id.card_text_oneclic);
         nomb.setText(receta.getNombre());
+        imagenReceta = (ImageView) rootView.findViewById(R.id.card_image_oneclic);
+        String imagename = receta.getImagen();
+        if(imagename != null){
+            int res = c.getResources().getIdentifier(imagename, "drawable", c.getPackageName());
+            imagenReceta.setImageResource(res);
+        }
+
         detail=(Button)rootView.findViewById(R.id.action_button_oneclic);
         share=(ImageButton)rootView.findViewById(R.id.share_button_oneclic);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
@@ -56,6 +67,11 @@ public class OneclicContentFragment extends Fragment{
             public void onRefresh() {
                 receta=recetas.get(randomize(recetas.size()-1));
                 nomb.setText(receta.getNombre());
+                String imagename2 = receta.getImagen();
+                if(imagename2 != null){
+                    int res = c.getResources().getIdentifier(imagename2, "drawable", c.getPackageName());
+                    imagenReceta.setImageResource(res);
+                }
                 refreshLayout.setRefreshing(false);
             }
         });

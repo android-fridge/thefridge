@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 dbAccess.open();
                 usuario=dbAccess.get(userId.getText().toString());
-
+                dbAccess.close();
                 if (usuario==null){
                     closeWaitDialog();
                     showDialogMessage("¡Error!", "Usuario o contraseña incorrectos, ", false);
@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                         showDialogMessage("¡Error!", "Usuario o contraseña incorrectos, ", false);
                     }
                 }
-                dbAccess.close();
+
             }
         });
         buttonRegister.setOnClickListener(new View.OnClickListener(){
@@ -102,8 +102,6 @@ public class LoginActivity extends AppCompatActivity {
         userDialog.show();
     }
     private void exit(String uname) {
-
-        Context context = this.getApplicationContext();
         Intent intent = new Intent(this, MainActivity.class);
         finish();
         startActivity(intent);

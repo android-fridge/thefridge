@@ -45,6 +45,7 @@ public class OneclicContentFragment extends Fragment{
         DatabaseAccess db = DatabaseAccess.getInstance(c);
         db.open();
         recetas = db.getRecetasNevera();
+        db.close();
         receta=recetas.get(randomize(recetas.size()-1));
         nomb = (TextView) rootView.findViewById(R.id.card_text_oneclic);
         nomb.setText(receta.getNombre());
